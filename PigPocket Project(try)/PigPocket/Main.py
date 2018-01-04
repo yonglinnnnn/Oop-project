@@ -30,12 +30,11 @@ class newTransaction(Form):
 
 @app.route('/fundTransfer',methods=['GET',"POST"])
 def fundtransfer():
-    session['name'] = 'Yonglin'
+    session['userid'] = 'Yonglin'
     form = newTransaction(request.form)
     if request.method == 'POST' and form.validate():
-        MainProcess.newTransaction(session["name"],"31 Dec 2017",form.bank_details.data,form.transaction_details.data,"None",form.withdraw.data)
-    userlist=[]
-    userlist=MainProcess.processTransaction()
+        MainProcess.newTransaction(session["userid"],"4 Jan 2018",form.bank_details.data,form.transaction_details.data,"None",form.withdraw.data)
+    userlist=MainProcess.processTransaction(session["userid"])
     return render_template('fundtransfer.html',Transaction=userlist,form=form)
 
 @app.route('/giro')
