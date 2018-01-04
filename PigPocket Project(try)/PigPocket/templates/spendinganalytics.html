@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pig Pocket|Spending Analytics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <link href="PigPocket/static/css/SpendingAnalytics.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <style>
+    body {
+        font-family: "Lato", sans-serif;
+    }
+
+    h1 { font-size:28px;
+    font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace;  }
+
+    h3{font-weight:bold;
+       text-align: center;
+       font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace}
+
+    h2{font-size:25px;
+        font-weight:bold;
+        text-align: center;
+        font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace}
+
+    div #borders {
+    border-style: solid;
+    width:80%;
+    margin:auto;
+    margin-bottom:100px;
+    background-color:#FAE9E4;
+}
+    </style>
+</head>
+<body>
+    {% extends 'layout.html' %}
+    {% block body %}
+
+    <div class="w3-container">
+<h1 style="text-align:center;">Spending Analytics</h1>
+
+<div id="piechart" style="float:left;display:inline-block;"></div>
+<div id="piechart2" style="float:right;display:inline-block;"></div>
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+<div id="borders">
+<h2>You buy what you want</h2>
+<h3>Spur of the moment, unplanned decision to buy, made just before a purchase.</h3>
+
+<ol style="text-align: center;list-style-position: inside;font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace">
+    <li style="color:orange;">You have spent <span style="font-weight: bold;">$200</span> more on food compared to last month</li>
+    <li style="color:purple;">You have spent <span style="font-weight: bold;">$20</span> more on bill compared to last month</li>
+    <li style="color:blue;">You have spent <span style="font-weight: bold;">$100</span> more on food compared to last month</li>
+</ol>
+<h3>Improve by:</h3>
+<ul style="text-align: center;list-style-position: inside;font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace">
+<li style="color:green">Find cheaper option on your rent</li>
+<li style="color:orange;">Eat out less and cook yourself</li>
+<li style="color:blue;">Limit yourself when you shop</li>
+<li style="color:purple">Limit yourself on your data to save money on bills</li>
+</ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Spendings', '$'],
+  ['Shopping',500],
+  ['Leisure', 20],
+  ['Food', 267],
+  ['Rent', 750],
+  ['Bill', 89]
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Nov 2017', 'width':700, 'height':700};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+
+         google.visualization.events.addListener(chart, 'select', selectHandler);
+
+        var label1 = data.pieSliceText('label');
+
+        // The selection handler.
+        // Loop through all items in the selection and concatenate
+        // a single message from all of them.
+  function selectHandler() {
+    var selection = chart.getSelection();
+    if (selection.length) {
+        var pieSliceLabel = data.getValue(selection[0].row, 0);
+        if (pieSliceLabel=="Shopping"){
+            window.location.href = '/transaction';}
+        else if (pieSliceLabel=="Leisure"){
+            window.location.href="/transaction"}
+        else if (pieSliceLabel=="Food"){
+            window.location.href="/transaction"}
+        else if (pieSliceLabel=="Rent"){
+            window.location.href="/transaction"}
+        else{window.location.href="/transaction"}
+    }
+}
+}
+</script>
+
+<script>
+    // Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Spendings', '$'],
+  ['Shopping',600],
+  ['Leisure', 50],
+  ['Food', 467],
+  ['Rent', 750],
+  ['Bill', 109]
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Dec 2017', 'width':700, 'height':700};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+  chart.draw(data, options);
+
+         google.visualization.events.addListener(chart, 'select', selectHandler);
+
+        var label1 = data.pieSliceText('label');
+
+        // The selection handler.
+        // Loop through all items in the selection and concatenate
+        // a single message from all of them.
+  function selectHandler() {
+    var selection = chart.getSelection();
+    if (selection.length) {
+        var pieSliceLabel = data.getValue(selection[0].row, 0);
+        if (pieSliceLabel=="Shopping"){
+            window.location.href ="/transaction";}
+        else if (pieSliceLabel=="Leisure"){
+            window.location.href="/transaction"}
+        else if (pieSliceLabel=="Food"){
+            window.location.href="/transaction"}
+        else if (pieSliceLabel=="Rent"){
+            window.location.href="/transaction"}
+        else{window.location.href="/transaction"}
+    }
+}
+}
+</script>
+
+  <script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+    </script>
+{% endblock %}
+
+
+</body>
+</html>

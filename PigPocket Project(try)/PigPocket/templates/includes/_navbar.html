@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>W3.CSS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/_navbar.css">
+    <script type="text/javascript" src="/static/js/_navbar.js"></script>
+</head>
+<body>
+    <div id="mySidenav" class="sidenav">
+        <a style="cursor: pointer" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="/home">Home</a>
+        <a href="/accounts">Accounts</a>
+        <a href="/fundTransfer">Fund Transfer</a>
+        <a href="/giro">Giro Payments</a>
+        <a href="/spendinganalytics">Spending Analytic</a>
+        <a href="/rewards">Rewards</a>
+        <a href="/faqs">FAQs</a>
+        <br>
+        <a><img src="/static/images/pinkpig.png" width="90%" height="50%"></a>
+    </div>
+
+    <div style="background-color: lightpink">
+        <span style="font-size:30px;cursor:pointer; margin-left: 1%; margin-right: 85%" onclick="openNav()">&#9776;</span>
+
+        <a href="#"><i style="font-size:24px" class="fa">&#xf003;</i></a>
+        &nbsp;&nbsp;&nbsp;
+        <a href="#"><span class="glyphicon glyphicon-shopping-cart" style="font-size: 19px"></span></a>
+        &nbsp;&nbsp;&nbsp;
+        <a onclick="logout()" href="/login">LOGOUT</a>
+
+        <p id="pt"><img src="/static/images/Headings.png" width="20%" height="10%"></p>
+    </div>
+
+    <script>
+        function logout()
+        {
+            alert("Successfully logout!")
+        }
+    </script>
+</body>
+</html>
+
+
+

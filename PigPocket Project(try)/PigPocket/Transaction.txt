@@ -1,0 +1,6 @@
+Yonglin,19 Dec 2017,Posb 130-48734-9,Pay,900,None
+Yonglin,23 Dec 2017,Ocbc 613-54986-9,Shopee,None,5.39
+Yonglin,31 Dec 2017,Posb 130-48734-9,Mr Ong,None,6.99
+Yonglin,31 Dec 2017,Posb 130-48734-9,yl,None,999
+Yonglin,31 Dec 2017,Ocbc 613-54986-9,Ezbuy,None,77
+Audrey,1 Jan 2017,Ocbc 612-97865-0,rent,None,750

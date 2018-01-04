@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PigPocket|HOME</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<style>
+    .current {
+        font-size:30px;
+        display:inline-block;
+        text-align:right;
+        position:relative;
+        left:9%;
+        margin-top:9%;
+    }
+    .past {
+        font-size:23px;
+        display:inline-block;
+        text-align:right;
+        position:relative;
+        left:900px;
+        bottom:250px;
+    }
+    #date {
+        position:relative;
+        right:45%;
+        text-decoration: underline;
+        font-weight: bold;
+    }
+    #pre {
+        position:relative;
+        right:45%;
+        text-decoration: underline;
+        font-weight: bold;
+    }
+    #notice {
+        position:absolute;
+        margin-left: 33%;
+    }
+    .mySlides {
+        display:none;
+        margin:auto;
+        position:relative;
+        top:50px;
+    }
+</style>
+</head>
+<body>
+    {% extends 'layout.html' %}
+    {% block body %}
+        <div id="notice">
+            <table>
+                <tr><th style="text-align: center">Daily Updates</th></tr>
+                <tr><td>You have accumulated sufficient points to redeem rewards!! Redeem them <a href="/rewards">NOW</a>!</td></tr>
+            </table>
+
+        </div>
+
+        <div class="w3-content w3-section" style="max-width:500px">
+            <img class="mySlides" src="/static/images/Home_s images/respectmoney.gif" style="width:100%">
+            <img class="mySlides" src="/static/images/Home_s images/moneyinbank.gif" style="width:100%">
+            <img class="mySlides" src="/static/images/Home_s images/savemoney.jpg" style="width:90%">
+            <img class="mySlides" src="/static/images/Home_s images/yourvalue.png" style="width:100%">
+            <img class="mySlides" src="/static/images/Home_s images/smallexpenses.gif" style="width:100%">
+        </div>
+
+    <div class="current">
+        <p id="date"></p>
+
+        <script>
+	    n =  new Date();
+        m = n.getMonth() + 1;
+        if (m == 1) {
+            month = "Jan"
+        }
+        else if (m == 2) {
+            month = "Feb"
+            }
+        else if (m == 3) {
+            month = "Mar"
+        }
+        else if (m == 4) {
+            month = "Apr"
+        }
+        else if (m == 5) {
+            month = "May"
+        }
+        else if (m == 6) {
+            month = "Jun"
+        }
+        else if (m == 7) {
+            month = "Jul"
+        }
+        else if (m == 8) {
+            month = "Aug"
+        }
+        else if (m == 9) {
+            month = "Sep"
+        }
+        else if (m == 10) {
+            month = "Oct"
+        }
+        else if (m == 11) {
+            month = "Nov"
+        }
+        else {
+            month = "Dec"
+        }
+        document.getElementById("date").innerHTML = month
+	    </script>
+
+        <table>
+            <tr><td>Withdrawal : $2,000&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-info" style="color:pink;">Info</button></td></tr>
+            <tr><td>Deposit : $5,000&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-info" style="color:pink;">Info</button></td></tr>
+            <tr><td>Savings A/C : $25,000&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-info" style="color:pink;">Info</button></td></tr>
+            <tr><td>Current A/C : $5,000&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-info" style="color:pink;">Info</button></td></tr>
+            <tr><td>Fixed Deposit A/C : $50,000&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-info" style="color:pink;">Info</button></td></tr>
+        </table>
+
+    </div>
+
+
+<div class="w3-container">
+
+    <div class="past">
+        <p id="pre"></p>
+
+        <script>
+	    n =  new Date();
+        m = n.getMonth();
+        if (m == 1) {
+            month = "Jan"
+        }
+        else if (m == 2) {
+            month = "Feb"
+            }
+        else if (m == 3) {
+            month = "Mar"
+        }
+        else if (m == 4) {
+            month = "Apr"
+        }
+        else if (m == 5) {
+            month = "May"
+        }
+        else if (m == 6) {
+            month = "Jun"
+        }
+        else if (m == 7) {
+            month = "Jul"
+        }
+        else if (m == 8) {
+            month = "Aug"
+        }
+        else if (m == 9) {
+            month = "Sep"
+        }
+        else if (m == 10) {
+            month = "Oct"
+        }
+        else if (m == 11) {
+            month = "Nov"
+        }
+        else {
+            month = "Dec"
+        }
+        document.getElementById("pre").innerHTML = month
+	    </script>
+
+        <p>Withdrawal : $6,000&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-info" style="color:pink;">Info</button></p>
+        <p>Deposit : $2,000&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-info" style="color:pink;">Info</button></p>
+        <p>Savings A/C : $20,000&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-info" style="color:pink;">Info</button></p>
+        <p>Current A/C : $7,000&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-info" style="color:pink;">Info</button></p>
+        <p>Fixed Deposit A/C : $50,000&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-outline-info" style="color:pink;">Info</button></p>
+
+    </div>
+
+</div>
+
+    <script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+    </script>
+
+    <script>
+    var myIndex = 0;
+    carousel();
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+           x[i].style.display = "none";
+        }
+        myIndex++;
+        if (myIndex > x.length) {myIndex = 1}
+        x[myIndex-1].style.display = "block";
+        setTimeout(carousel, 5000); // Change image every 2 seconds
+    }
+    </script>
+{% endblock %}
+
+</body>
+</html>

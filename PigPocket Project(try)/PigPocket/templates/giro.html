@@ -1,0 +1,310 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+
+    <head>
+        <link rel='stylesheet' href='giro.css' />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <meta charset="utf-8" />
+        <title>giropage</title>
+        <style>
+            .fonth {
+                font-family:'Open Sans Condensed';
+            }
+            .rows {
+                padding:20px;
+                width:100px;
+            }
+            .tableh {
+                font-size:2em;
+                padding:20px;
+                color:white;
+                background-color:#2CBBBB;
+                font-family:'Open Sans Condensed';
+            }
+            .Container {
+                border:1px solid black;
+                border-radius:20px;
+                margin-top:50px;
+                margin-left:40px;
+                border-collapse:collapse;
+                font-family:cursive;
+                margin:auto;
+            }
+            .Container tr:nth-child(even) {
+                background-color:#F1F1F1;
+            }
+            .Container tr:nth-child(odd) {
+                background-color:#FEFEFE;
+            }
+            #lastcontent {
+                text-align:center;
+            }
+            #butt {
+                background-color:black;
+                color:white;
+                width:80px;
+                height:35px;
+                border-radius:10px;
+                cursor:pointer;
+            }
+            #close {
+                float:right;
+                cursor:pointer;
+                font-size:50px;
+            }
+            form {
+                border:1px solid black;
+                font-family:'Open Sans Condensed';
+                text-align:center;
+                display:none;
+                background-color:white;
+                color:black;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                height:640px;
+                width:500px;
+            }
+            #formhead {
+                text-align:center;
+                font-size:2.5em;
+                background-color:orange;
+                height:10%;
+            }
+            .ph {
+                box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                outline: none;
+                display: block;
+                width: 100%;
+                padding: 7px;
+                border: none;
+                border-bottom: 1px solid #ddd;
+                background: transparent;
+                margin-bottom: 10px;
+                font: 16px Arial, Helvetica, sans-serif;
+                height: 45px;
+            }
+            #submitbut {
+                -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+                -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+                box-shadow: inset 0px 1px 0px 0px #45D6D6;
+                background-color: #2CBBBB;
+                border: 1px solid #27A0A0;
+                display: inline-block;
+                cursor: pointer;
+                color: #FFFFFF;
+                font-family:'Open Sans Condensed', sans-serif;
+                font-size: 14px;
+                padding: 8px 18px;
+                text-decoration: none;
+                text-transform: uppercase;
+            }
+            .rows {
+                padding-right:20px;
+            }
+        </style>
+    </head>
+
+    <body>{% extends 'layout.html' %} {% block body %}
+        <div class='heading'>
+             <h1 class='fonth text-center'>Giro payment and transactions</h1>
+            <hr/>
+        </div>
+        <div>
+            <table id="tablegiro" class='Container' border='1'>
+                <tr>
+                    <th colspan='7' class='tableh'>Giro Transactions and payments
+                    </th>
+                </tr>
+                <tr class='rowt'>
+                    <td><span class='filter'>Filter by category:  </span>
+                        <select>
+                            <option value="all" />All</option>
+                            <option value="utility" />Utility</option>
+                            <option value="Bils" />Others</option>
+                            <option value="Standardtransfer" />Standard Transfer</option>
+                        </select>
+                    </td>
+
+                    <td><span class='filter'>Filter by bank account:  </span>
+                        <select>
+                            <option value="all" />All</option>
+                            <option value="dbs-s" />DBS-Savings</option>
+                            <option value="ocbc-s" />OCBC-Savings</option>
+                            <option value="uob-s" />UOB-Savings</option>
+                        </select>
+                    </td>
+                    <td><span class='filter'>Filter by Amount:  </span>
+                        <select>
+                            <option value="h-l" />Highest to lowest</option>
+                            <option value="l-h" />Lowest to Highest</option>
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+                <tr class='rowt'>
+                    <td class='rows'>Bank account number: 247-1231-3
+                    </td>
+                    <td class='rows'>Category:Others
+                    </td>
+                    <td class='rows'>Specify:House Loan
+                    </td>
+                    <td class='rows'>Amount:$2000
+                    </td>
+                    <td class='rows'>Account paying to: 149-3212-2
+                    </td>
+                    <td class='rows'>Date added:2015-7-9
+                    </td>
+                    <td class='rows'>Status:<span style='font-size:2em;'>&#10003;</span>
+                    </td>
+                    </td>
+                </tr>
+                <tr class='rowt'>
+                    <td class='rows'>Bank account number: 247-9870-1
+                    </td>
+                    <td class='rows'>Category:Utility
+                    </td>
+                    <td class='rows'>Specify:Water bills
+                    </td>
+                    <td class='rows'>Amount:$700
+                    </td>
+                    <td class='rows'>Account paying to: 312-1234-6
+                    </td>
+                    <td class='rows'>Date added:2013-12-3
+                    </td>
+                    <td class='rows'>Status:<span style='font-size:2em;'>&#10003;</span>
+                    </td>
+                    </td>
+                </tr>
+                <tr class='rowt'>
+                    <td class='rows'>Bank account number: 247-4321-1
+                    </td>
+                    <td class='rows'>Category:Standard Transfer
+                    </td>
+                    <td class='rows'>Specify:Installment for phone
+                    </td>
+                    <td class='rows'>Amount:$28
+                    </td>
+                    <td class='rows'>Account paying to: 213-1110-0
+                    </td>
+                    <td class='rows'>Date added:2014-2-13
+                    </td>
+                    <td class='rows'>Status:<span style='font-size:2em;'>&#10003;</span>
+                    </td>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id='lastcontent'>
+            <hr/>
+             <h2 class='fonth'>Add more payments here!</h2>
+            </br>
+            <button id='butt' value='add'>Add Giro</button>
+        </div>
+        <div>
+            <form action="/action_page.php" id='addgiro'>
+                <legend id='formhead'>Add Giro Form</legend>
+                <br>
+                <input id='fbn' class='ph' type="text" name="field1" placeholder="Enter bank account number here:" />
+                <br>
+                <input id='famt' class='ph' type="number" name="field2" placeholder="Enter Amount payable: " />
+                <br>
+                <input id='fpt' class='ph' type="text" name="field3" placeholder="Enter bank account number (Pay to):" />
+                <br>
+                <input id='fs' class='ph' type="text" name="field4" placeholder="Specify:" />
+                <br>
+                <input id='fd' class='ph' type="date" name="field3" placeholder="Date:" />
+                <br>
+                <select class='ph' id='fo'>
+                    <option value="all" />All</option>
+                    <option value="utility" />Utility</option>
+                    <option value="Bils" />Others</option>
+                    <option value="Standardtransfer" />Standard Transfer</option>
+                </select>
+                <br>
+                <input onclick='addgiro()' id='submitbut' Stype="button" value="Add Giro Transfer" />
+                <br>
+                 <span id="close">&times;</span>
+            </form>
+        </div>
+
+        <script>
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+            }
+
+            var openform = document.getElementById("addgiro");
+            var addbutton = document.getElementById("butt");
+            var closebuton = document.getElementById("close");
+            addbutton.onclick = function() {
+                openform.style.display = 'block';
+            }
+            closebuton.onclick = function() {
+                openform.style.display = 'none';
+            }
+
+            function addgiro() {
+                confirm("Confirm Add Grio?");
+                var formbankno = document.getElementById("fbn").value;
+                var formamount = document.getElementById("famt").value;
+                var formpayto = document.getElementById("fpt").value;
+                var formspecify = document.getElementById("fs").value;
+                var formdate = document.getElementById("fd").value;
+                var formoption = document.getElementById("fo").value;
+                var formbutton = document.getElementById("submitbut");
+                var table = document.getElementById("tablegiro");
+                var row = table.insertRow(-1);
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+                var cell6 = row.insertCell(5);
+                var cell7 = row.insertCell(6);
+                cell1.style.padding = "20px";
+                cell1.style.width = "100px";
+                cell2.style.padding = "20px";
+                cell2.style.width = "100px";
+                cell3.style.padding = "20px";
+                cell3.style.width = "100px";
+                cell4.style.padding = "20px";
+                cell4.style.width = "100px";
+                cell5.style.padding = "20px";
+                cell5.style.width = "100px";
+                cell6.style.padding = "20px";
+                cell6.style.width = "100px";
+                cell7.style.padding = "20px";
+                cell7.style.width = "100px";
+                cell1.innerHTML = 'Bank account number:' + formbankno;
+                cell2.innerHTML = 'Category:' + formoption;
+                cell3.innerHTML = 'Specify:' + formspecify;
+                cell4.innerHTML = 'Amount:$' + formamount;
+                cell5.innerHTML = "Account paying to:" + formpayto;
+                cell6.innerHTML = "Date added:" + formdate;
+                cell7.innerHTML = "Status:" + '&#10003;';
+            }
+        </script>{% endblock %}
+
+
+    </body>
+
+</html>

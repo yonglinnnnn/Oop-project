@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="PigPocket/static/css/rewards.css"/>
+    <link rel="stylesheet" href="PigPocket/static/js/rewards.js"/>
+
+<style>
+    body {
+        font-family: "Lato", sans-serif;
+    }
+
+    #rewardContainer{
+    }
+
+    .rewardDiv{
+        width: 20%;
+        display: inline-block;
+        margin: 1% 1%;
+    }
+</style>
+</head>
+
+
+<body>
+
+    {% extends 'layout.html' %}
+    {% block body %}
+    <h2 style="text-align: center;"><span id="points" style="color: darkred">300</span> <span style="color:darkred">points---Featured rewards</span></h2>
+    <input type="text" name="search"  placeholder="Search.."style="float:right;">
+    <p style="width: 12.5%;">==List of rewards available==</p>
+    <div>
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/goldenvillage.jpg" alt="goldenvillage" width="200px" height="200px"></p>
+            <p>Golden Village ticket</p>
+            <div class="w3-container">
+                <button onclick="document.getElementById('code1').style.display='block'" class="w3-button w3-black">Code: 30010</button>
+                <div id="code1" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code1').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$10 Golden village movie ticket</p>
+                            <p>200 points</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all golden village outlets</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code1.1').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code1.1" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code1.1').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <select name="qty" id="myqty1" onchange="count1()">
+                                                <option value="q1">Quantity:1</option>
+                                                <option value="q2">Quantity:2</option>
+                                                <option value="q3">Quantity:3</option>
+                                            </select>
+                                            <p id ='dpoint1'><span id="dp1">200</span> Points will be deducted</p>
+                                            <button onclick="myFunction()" style="float:right;">Confirm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/restaurant.jpg" alt="restaurant" width="200px" height="200px"></p>
+            <p>Restaurant coupon</p>
+            <div class="w3-container">
+                <button onclick="document.getElementById('code2').style.display='block'" class="w3-button w3-black">Code:30020</button>
+                <div id="code2" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code2').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$20 restaurant coupon</p>
+                            <p>200 points</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all related restaurant</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code2.2').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code2.2" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code2.2').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <select name="qty" id="myqty2" onchange="count2()">
+                                                <option value="q1">Quantity:1</option>
+                                                <option value="q2">Quantity:2</option>
+                                                <option value="q3">Quantity:3</option>
+                                            </select>
+                                            <p id ='dpoint2'>200 Points will be deducted</p>
+                                            <button onclick="myFunction()" style="float:right;">Confirm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/capitalland.jpg" alt="capitalland" width="200px" height="200px"></p>
+            <p>Capital Land voucher</p>
+            <div class="w3-container">
+                <button onclick="document.getElementById('code3').style.display='block'" class="w3-button w3-black">Code:30030</button>
+                <div id="code3" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code3').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$30 Capital Land voucher</p>
+                            <p>300 points</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all Capital Land mall</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code3.3').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code3.3" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code3.3').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <select name="qty" id="myqty3" onchange="count3()">
+                                                <option value="q1">Quantity:1</option>
+                                                <option value="q2">Quantity:2</option>
+                                                <option value="q3">Quantity:3</option>
+                                             </select>
+                                            <p id ='dpoint3'>300 Points will be deducted</p>
+                                            <button onclick="myFunction()" style="float:right;">Confirm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/polar.jpg" alt="polar" width="200px" height="200px"></p>
+            <p>Polar Puffs and Cakes voucher</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code4').style.display='block'" class="w3-button w3-black">Code:30040</button></p>
+                <div id="code4" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code4').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$10 Polar puffs and cakes voucher</p>
+                            <p>100 points</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all Polar outlet</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code4.4').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code4.4" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code4.4').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <select name="qty" id="myqty4" onchange="count4()">
+                                                <option value="q1">Quantity:1</option>
+                                                <option value="q2">Quantity:2</option>
+                                                <option value="q3">Quantity:3</option>
+                                            </select>
+                                            <p id ='dpoint4'>100 Points will be deducted</p>
+                                            <button onclick="myFunction()" style="float:right;">Confirm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/crystaljade.jpg" alt="crystaljade" width="200px" height="200px"></p>
+            <p>Crystal jade coupon</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code5').style.display='block'" class="w3-button w3-black">Code:30050</button></p>
+                <div id="code5" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code5').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$20 Crystal Jade coupon</p>
+                            <p>200 points</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all crystal jade restaurant</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code5.5').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code5.5" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code5.5').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <select name="qty" id="myqty5" onchange="count5()">
+                                                <option value="q1">Quantity:1</option>
+                                                <option value="q2">Quantity:2</option>
+                                                <option value="q3">Quantity:3</option>
+                                            </select>
+                                            <p id ='dpoint5'>200 Points will be deducted</p>
+                                            <button onclick="myFunction()" style="float:right;">Confirm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/fairprice.png" alt="crystaljade" width="200px" height="200px"></p>
+            <p>Fairprice voucher</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code6').style.display='block'" class="w3-button w3-black">Code:30060</button></p>
+                <div id="code6" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code6').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$20 Fairprice voucher</p>
+                            <p>100 points</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all fairprice store</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code6.6').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code6.6" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code6.6').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <select name="qty" id="myqty6" onchange="count6()">
+                                                <option value="q1">Quantity:1</option>
+                                                <option value="q2">Quantity:2</option>
+                                                <option value="q3">Quantity:3</option>
+                                            </select>
+                                            <p id ='dpoint6'>100 Points will be deducted</p>
+                                            <button onclick="myFunction()" style="float:right;">Confirm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/toyrus.jpg" alt="toyrus" width="200px" height="200px"></p>
+            <p>Toyrus voucher</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code7').style.display='block'" class="w3-button w3-black">Code:30070</button></p>
+                <div id="code7" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code7').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$20 toyrus voucher</p>
+                            <p>300 points</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all toyrus outlet</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code7.7').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code7.7" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code7.7').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <select name="qty" id="myqty7" onchange="count7()">
+                                                <option value="q1">Quantity:1</option>
+                                                <option value="q2">Quantity:2</option>
+                                                <option value="q3">Quantity:3</option>
+                                            </select>
+                                            <p id ='dpoint7'>300 Points will be deducted</p>
+                                            <button onclick="myFunction()" style="float:right;">Confirm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/sakae.jpg" alt="sakae" width="200px" height="200px"></p>
+            <p>Sakae Sushi coupon</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code8').style.display='block'" class="w3-button w3-black">Code:30080</button></p>
+                <div id="code8" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code8').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$20 Sakae Sushi coupon</p>
+                            <p>200 points</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all Sakae sushi outlet</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code8.8').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code8.8" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code8.8').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <select name="qty" id="myqty8" onchange="count8()">
+                                                <option value="q1">Quantity:1</option>
+                                                <option value="q2">Quantity:2</option>
+                                                <option value="q3">Quantity:3</option>
+                                            </select>
+                                            <p id ='dpoint8'>200 Points will be deducted</p>
+                                            <button onclick="myFunction()" style="float:right;">Confirm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/swensen.jpg" alt="swensen" width="200px" height="200px"></p>
+            <p>Swensen's coupon</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code9').style.display='block'" class="w3-button w3-black">Code:30090</button></p>
+                <div id="code9" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code9').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$10 Swensen's coupon</p>
+                            <p>100 points</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all Swensen's outlet</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code9.9').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code9.9" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code9.9').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <select name="qty" id="myqty9" onchange="count9()">
+                                                <option value="q1">Quantity:1</option>
+                                                <option value="q2">Quantity:2</option>
+                                                <option value="q3">Quantity:3</option>
+                                            </select>
+                                            <p id ='dpoint9'>100 Points will be deducted</p>
+                                            <button onclick="myFunction()" style="float:right;">Confirm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/ikea.jpg" alt="ikea" width="200px" height="200px"></p>
+            <p>Ikea voucher</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code10').style.display='block'" class="w3-button w3-black">Code:30100</button></p>
+                <div id="code10" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code10').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$30 iKea's voucher</p>
+                            <p>200 points</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all Ikea outlet</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code10.10').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code10.10" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code10.10').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <select name="qty" id="myqty10" onchange="count10()">
+                                                <option value="q1">Quantity:1</option>
+                                                <option value="q2">Quantity:2</option>
+                                                <option value="q3">Quantity:3</option>
+                                            </select>
+                                            <p id ='dpoint10'>200 Points will be deducted</p>
+                                            <button onclick="myFunction()" style="float:right;">Confirm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/benjerry.jpg" alt="benjerry" width="200px" height="200px"></p>
+            <p>Ben & Jerry's voucher voucher</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code11').style.display='block'" class="w3-button w3-black">Code:30110</button></p>
+                <div id="code11" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code11').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$10 Ben and Jerry's voucher</p>
+                            <p>50 points</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available for all Ben and Jerry products</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code11.11').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code11.11" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code11.11').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <select name="qty" id="myqty11" onchange="count11()">
+                                                <option value="q1">Quantity:1</option>
+                                                <option value="q2">Quantity:2</option>
+                                                <option value="q3">Quantity:3</option>
+                                            </select>
+                                            <p id ='dpoint11'>50 Points will be deducted</p>
+                                            <button onclick="myFunction()" style="float:right;">Confirm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/nex.png" alt="nex" width="200px" height="200px"></p>
+            <p>Nex shopping mall voucher</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code12').style.display='block'" class="w3-button w3-black">Code:30120</button></p>
+                <div id="code12" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code12').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$10 Nex voucher</p>
+                            <p>150 points</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available for all Nex shops</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code12.12').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code12.12" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code12.12').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <select name="qty" id="myqty12" onchange="count12()">
+                                                <option value="q1">Quantity:1</option>
+                                                <option value="q2">Quantity:2</option>
+                                                <option value="q3">Quantity:3</option>
+                                            </select>
+                                            <p id ='dpoint12'>150 Points will be deducted</p>
+                                            <button onclick="myFunction()" style="float:right;">Confirm</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                <script>
+                function openNav() {
+                    document.getElementById("mySidenav").style.width = "250px";
+                }
+
+                function closeNav() {
+                    document.getElementById("mySidenav").style.width = "0";
+                }
+                </script>
+
+
+
+            <script>
+            function count1() {
+                var x = document.getElementById("myqty1").value;
+                if(x == "q1"){
+                   document.getElementById("dpoint1").innerHTML = "200 points have been deducted";
+                }
+                else if(x == "q2"){
+                   document.getElementById("dpoint1").innerHTML = "400 points have been deducted";
+                }
+                else if(x == "q3"){
+                   document.getElementById("dpoint1").innerHTML = "600 points have been deducted";
+                }
+            }
+            </script>
+                    <script>
+            function count2() {
+                var x = document.getElementById("myqty2").value;
+                if(x == "q1"){
+                   document.getElementById("dpoint2").innerHTML = "200 points have been deducted";
+                }
+                else if(x == "q2"){
+                   document.getElementById("dpoint2").innerHTML = "400 points have been deducted";
+                }
+                else if(x == "q3"){
+                   document.getElementById("dpoint2").innerHTML = "600 points have been deducted";
+                }
+            }
+            </script>
+                    <script>
+            function count3() {
+                var x = document.getElementById("myqty3").value;
+                if(x == "q1"){
+                   document.getElementById("dpoint3").innerHTML = "300 points have been deducted";
+                }
+                else if(x == "q2"){
+                   document.getElementById("dpoint3").innerHTML = "600 points have been deducted";
+                }
+                else if(x == "q3"){
+                   document.getElementById("dpoint3").innerHTML = "900 points have been deducted";
+                }
+            }
+            </script>
+              <script>
+            function count4() {
+                var x = document.getElementById("myqty4").value;
+                if(x == "q1"){
+                   document.getElementById("dpoint4").innerHTML = "100 points have been deducted";
+                }
+                else if(x == "q2"){
+                   document.getElementById("dpoint4").innerHTML = "200 points have been deducted";
+                }
+                else if(x == "q3"){
+                   document.getElementById("dpoint4").innerHTML = "300 points have been deducted";
+                }
+            }
+            </script>
+            <script>
+            function count5() {
+                var x = document.getElementById("myqty5").value;
+                if(x == "q1"){
+                   document.getElementById("dpoint5").innerHTML = "200 points have been deducted";
+                }
+                else if(x == "q2"){
+                   document.getElementById("dpoint5").innerHTML = "400 points have been deducted";
+                }
+                else if(x == "q3"){
+                   document.getElementById("dpoint5").innerHTML = "600 points have been deducted";
+                }
+            }
+            </script>
+
+            <script>
+            function count6() {
+                var x = document.getElementById("myqty6").value;
+                if(x == "q1"){
+                   document.getElementById("dpoint6").innerHTML = "100 points have been deducted";
+                }
+                else if(x == "q2"){
+                   document.getElementById("dpoint6").innerHTML = "200 points have been deducted";
+                }
+                else if(x == "q3"){
+                   document.getElementById("dpoint6").innerHTML = "300 points have been deducted";
+                }
+            }
+            </script>
+
+            <script>
+            function count7() {
+                var x = document.getElementById("myqty7").value;
+                if(x == "q1"){
+                   document.getElementById("dpoint7").innerHTML = "300 points have been deducted";
+                }
+                else if(x == "q2"){
+                   document.getElementById("dpoint7").innerHTML = "600 points have been deducted";
+                }
+                else if(x == "q3"){
+                   document.getElementById("dpoint7").innerHTML = "900 points have been deducted";
+                }
+            }
+            </script>
+
+            <script>
+            function count8() {
+                var x = document.getElementById("myqty8").value;
+                if(x == "q1"){
+                   document.getElementById("dpoint8").innerHTML = "200 points have been deducted";
+                }
+                else if(x == "q2"){
+                   document.getElementById("dpoint8").innerHTML = "400 points have been deducted";
+                }
+                else if(x == "q3"){
+                   document.getElementById("dpoint8").innerHTML = "600 points have been deducted";
+                }
+            }
+            </script>
+
+            <script>
+            function count9() {
+                var x = document.getElementById("myqty9").value;
+                if(x == "q1"){
+                   document.getElementById("dpoint9").innerHTML = "100 points have been deducted";
+                }
+                else if(x == "q2"){
+                   document.getElementById("dpoint9").innerHTML = "200 points have been deducted";
+                }
+                else if(x == "q3"){
+                   document.getElementById("dpoint9").innerHTML = "300 points have been deducted";
+                }
+            }
+            </script>
+
+            <script>
+            function count10() {
+                var x = document.getElementById("myqty10").value;
+                if(x == "q1"){
+                   document.getElementById("dpoint10").innerHTML = "200 points have been deducted";
+                }
+                else if(x == "q2"){
+                   document.getElementById("dpoint10").innerHTML = "400 points have been deducted";
+                }
+                else if(x == "q3"){
+                   document.getElementById("dpoint10").innerHTML = "600 points have been deducted";
+                }
+            }
+            </script>
+
+
+            <script>
+            function count11() {
+                var x = document.getElementById("myqty11").value;
+                if(x == "q1"){
+                   document.getElementById("dpoint11").innerHTML = "50 points have been deducted";
+                }
+                else if(x == "q2"){
+                   document.getElementById("dpoint11").innerHTML = "100 points have been deducted";
+                }
+                else if(x == "q3"){
+                   document.getElementById("dpoint11").innerHTML = "150 points have been deducted";
+                }
+            }
+            </script>
+
+            <script>
+            function count12() {
+                var x = document.getElementById("myqty12").value;
+                if(x == "q1"){
+                   document.getElementById("dpoint12").innerHTML = "150 points have been deducted";
+                }
+                else if(x == "q2"){
+                   document.getElementById("dpoint12").innerHTML = "300 points have been deducted";
+                }
+                else if(x == "q3"){
+                   document.getElementById("dpoint12").innerHTML = "450 points have been deducted";
+                }
+            }
+            </script>
+
+
+                    <script>
+            function myFunction() {
+                    alert("Product will be sent to you within 7 days.");
+            }
+                    </script>
+        {% endblock %}
+
+</body>
+</html>
