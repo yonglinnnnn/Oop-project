@@ -5,4 +5,11 @@ Yonglin,31 Dec 2017,Posb 130-48734-9,Mr Ong,None,6.99
 Audrey,1 Jan 2017,Ocbc 612-97865-0,rent,None,750
 Peizhen,2 Jan 2017,Posb 9289-292-1,Pay,980.66,None
 Audrey,4 Jan 2018,Ocbc 613-54986-9,mr tan,None,76
-Yonglin,4 Jan 2018,Ocbc 613-54986-9,shopback,None,98.76
+Yonglin,4 Jan 2018,Ocbc 613-54986-9,Mr Liew,None,165
+Audrey,5 Jan 2018,Posb 130-48734-9,Elf,None,989.99
+Yonglin,5 Jan 2018,Ocbc 613-54986-9,Ms lim,None,900
+Yonglin,6 Jan 2018,Posb 130-48734-9,Mr lim,1007.89,None
+Yonglin,6 Jan 2018,Ocbc 613-54986-9,nyp,None,80
+Yonglin,6 Jan 2018,Ocbc 613-54986-9,bill,None,109.87
+Yonglin,6 Jan 2018,Posb 130-48734-9,nyp,None,90.63
+

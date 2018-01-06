@@ -112,8 +112,11 @@ text-align: left}
                 <td>{{ Trans.get_transaction_details() }}</td>
                 <td>{{ Trans.get_deposit() }}</td>
                 <td>{{ Trans.get_withdraw() }}</td>
+
             </tr>
             {% endfor %}
+            <tr><td colspan="4">Total Deposit</td><td>${{totaldeposit}}</td></tr>
+            <tr><td colspan="4">Total Withdraw:</td><td>${{totalwithdraw}}</td></tr>
     </table>
             <br>
             <button onclick="document.getElementById('popout').style.display='block'" class="w3-button w3-black" style="margin-left: 15%;">

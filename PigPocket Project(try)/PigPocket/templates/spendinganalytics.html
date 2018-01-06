@@ -75,16 +75,13 @@ google.charts.setOnLoadCallback(drawChart);
 // Draw the chart and set the chart values
 function drawChart() {
   var data = google.visualization.arrayToDataTable([
-  ['Spendings', '$'],
-  ['Shopping',500],
-  ['Leisure', 20],
-  ['Food', 267],
-  ['Rent', 750],
-  ['Bill', 89]
+  ['Transaction', '$'],
+  ['Deposit',{{totalprevdeposit}}],
+  ['Withdraw',{{totalprevwithdraw}}],
 ]);
 
   // Optional; add a title and set the width and height of the chart
-  var options = {'title':'Nov 2017', 'width':700, 'height':700};
+  var options = {'title':'Dec 2017', 'width':700, 'height':700};
 
   // Display the chart inside the <div> element with id="piechart"
   var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -101,15 +98,10 @@ function drawChart() {
     var selection = chart.getSelection();
     if (selection.length) {
         var pieSliceLabel = data.getValue(selection[0].row, 0);
-        if (pieSliceLabel=="Shopping"){
-            window.location.href = '/transaction';}
-        else if (pieSliceLabel=="Leisure"){
+           if (pieSliceLabel=="Deposit"){
+            window.location.href ="/transaction";}
+        else if (pieSliceLabel=="Withdraw"){
             window.location.href="/transaction"}
-        else if (pieSliceLabel=="Food"){
-            window.location.href="/transaction"}
-        else if (pieSliceLabel=="Rent"){
-            window.location.href="/transaction"}
-        else{window.location.href="/transaction"}
     }
 }
 }
@@ -123,16 +115,14 @@ google.charts.setOnLoadCallback(drawChart);
 // Draw the chart and set the chart values
 function drawChart() {
   var data = google.visualization.arrayToDataTable([
-  ['Spendings', '$'],
-  ['Shopping',600],
-  ['Leisure', 50],
-  ['Food', 467],
-  ['Rent', 750],
-  ['Bill', 109]
+  ['Transaction', '$'],
+  ['Deposit',{{totaldeposit}}],
+  ['Withdraw', {{totalwithdraw}}],
+
 ]);
 
   // Optional; add a title and set the width and height of the chart
-  var options = {'title':'Dec 2017', 'width':700, 'height':700};
+  var options = {'title':'Jan 2018', 'width':700, 'height':700};
 
   // Display the chart inside the <div> element with id="piechart"
   var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
@@ -149,15 +139,10 @@ function drawChart() {
     var selection = chart.getSelection();
     if (selection.length) {
         var pieSliceLabel = data.getValue(selection[0].row, 0);
-        if (pieSliceLabel=="Shopping"){
+        if (pieSliceLabel=="Deposit"){
             window.location.href ="/transaction";}
-        else if (pieSliceLabel=="Leisure"){
+        else if (pieSliceLabel=="Withdraw"){
             window.location.href="/transaction"}
-        else if (pieSliceLabel=="Food"){
-            window.location.href="/transaction"}
-        else if (pieSliceLabel=="Rent"){
-            window.location.href="/transaction"}
-        else{window.location.href="/transaction"}
     }
 }
 }

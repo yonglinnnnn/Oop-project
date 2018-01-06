@@ -59,63 +59,59 @@
 
         <div class="w3-container">
             <h2>Transaction type:</h2>
-            <select id="type">
-        <option value="All" id="All">All</option>
-        <option value="Shopping" id="Shopping">Shopping</option>
-        <option value="Leisure" id="Leisure">Leisure</option>
-        <option value="Food" id="Food">Food</option>
-        <option value="Rent" id="Rent">Rent</option>
-        <option value="Bill" id="Bill">Bill</option>
-            </select>
 
             <select id="time">
-                <option value="Dec" id="Dec" selected>Dec 2017</option>
-                <option value="Nov" id="Nov">Nov 2017</option>
-            </select>
-
-            <select id="price">
-                <option value="date" id="date">Most Recent</option>
-                <option value="low" id="low">Low to high</option>
-                <option value="high" id="high">High to low</option>
+                <option value="Jan" id="Jan" selected>Jan 2018</option>
+                <option value="Dec" id="Dec">Dec 2017</option>
             </select>
 
     <!---Results-->
     <div id="cool" style="display:none">
     <table border="1" style="border-collapse:collapse;margin:auto;width:80%;">
 
-    <thead>Transaction for Dec 2017:</thead>
-    <tr><th>Date:</th><th>Details</th><th>Price</th></tr>
-    <tr><td>10 Dec 17</td><td>Topshop</td><td>$760.79</td></tr>
-    <tr><td>8 Dec 17</td><td>Kopitiam</td><td>$5.50</td></tr>
-    <tr><td>4 Dec 17</td><td>Shaw Theatre</td><td>$7.00</td></tr>
-    <tr><td>2 Dec 17</td><td>Ajisen</td><td>$17.80</td></tr>
-        <tr><td colspan="2">Total Spendings:</td><td>$791.09</td></tr></tr>
+    <thead>Transaction for Jan 2018:</thead>
+    <tr><th>Date:</th><th>Bank Details</th><th>Transaction details</th><th>Deposit</th><th>Withdraw</th></tr>
+    {% for Trans in Transaction %}
+        {% if Trans.get_date().endswith("Jan 2018") %}
+        <tr>
+                <td>{{ Trans.get_date() }}</td>
+                <td>{{ Trans.get_bank_details() }}</td>
+                <td>{{ Trans.get_transaction_details() }}</td>
+                <td>{{ Trans.get_deposit() }}</td>
+                <td>{{ Trans.get_withdraw() }}</td>
+            </tr>
+        {% endif %}
+        {% endfor %}
+
+
+        <tr><td colspan="4">Total Deposit</td><td>${{totaldeposit}}</td></tr>
+        <tr><td colspan="4">Total Withdraw:</td><td>${{totalwithdraw}}</td></tr>
+
 
     </table>
     </div>
 
-    <!--Shopping dec-->
-    <div id="shop" style="display:none">
-    <table border="1" style="border-collapse:collapse;margin:auto;width:80%;">
-    <thead>Transaction for Dec 2017:</thead>
-    <tr><th>Date:</th><th>Details</th><th>Price</th></tr>
-    <tr><td>10 Dec 17</td><td>Topshop</td><td>$760.79</td></tr>
-    <tr><td colspan="2">Total Spendings:</td><td>$760.79</td></tr></tr>
-
-    </table>
-    </div>
 
     <div id="cooler" style="display:none">
     <table border="1" style="border-collapse:collapse;margin:auto;width:80%">
 
-    <thead>Transaction for Nov 2017:</thead>
+    <thead>Transaction for Dec 2017:</thead>
 
-    <tr><th>Date:</th><th>Details</th><th>Price</th></tr>
-    <tr><td>18 Nov 17</td><td>Ezbuy</td><td>$159.84</td></tr>
-    <tr><td>17 Nov 17</td><td>Zalora</td><td>$519.32</td></tr>
-    <tr><td>5 Nov 17</td><td>Popular</td><td>$7.00</td></tr>
-    <tr><td colspan="2">Total Spendings:</td><td>$686.16</td></tr>
+    <tr><th>Date:</th><th>Bank Details</th><th>Transaction details</th><th>Deposit</th><th>Withdraw</th></tr>
+    {% for Trans in Transaction %}
+        {% if Trans.get_date().endswith("Dec 2017") %}
+        <tr>
+                <td>{{ Trans.get_date() }}</td>
+                <td>{{ Trans.get_bank_details() }}</td>
+                <td>{{ Trans.get_transaction_details() }}</td>
+                <td>{{ Trans.get_deposit() }}</td>
+                <td>{{ Trans.get_withdraw() }}</td>
+            </tr>
+        {% endif %}
+        {% endfor %}
 
+        <tr><td colspan="4">Total Deposit</td><td>${{totalprevdeposit}}</td></tr>
+        <tr><td colspan="4">Total Withdraw:</td><td>${{totalprevwithdraw}}</td></tr>
     </table>
     </div>
 
@@ -124,32 +120,18 @@
     <script>
     function dec(){
         var a = document.getElementById("time");
-        var b = document.getElementById("type");
-        var c=  document.getElementById("price");
     var strUser = a.options[a.selectedIndex].value;
-    var User = b.options[b.selectedIndex].value;
-    var Users = c.options[c.selectedIndex].value;
-      if (strUser == "Dec" && User=="All" && Users=="date" ) {
-          document.getElementById("shop").style.display="none";
+      if (strUser == "Jan" ) {
+          document.getElementById("cooler").style.display="none";
           document.getElementById("cool").removeAttribute("style");
       }
-      else if (strUser == "Dec" && User=="Shopping" && Users=="date" ) {
-          document.getElementById("cool").style.display="none";
-          document.getElementById("shop").removeAttribute("style"); }
-      else
-          { document.getElementById("cool").style.display = "none";
-            document.getElementById("shop").style.display="none"
-           }
       }
 
     function nov(){
         var a = document.getElementById("time");
-        var b = document.getElementById("type");
-        var c=  document.getElementById("price");
     var strUser = a.options[a.selectedIndex].value;
-    var User = b.options[b.selectedIndex].value;
-    var Users = c.options[c.selectedIndex].value;
-      if (strUser == "Nov" && User=="All" && Users=="date" ) {
+      if (strUser == "Dec") {
+      document.getElementById("cool").style.display="none";
       document.getElementById("cooler").removeAttribute("style");
       }
       else { document.getElementById("cooler").style.display = "none"; }

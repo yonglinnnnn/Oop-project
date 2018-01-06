@@ -13,8 +13,18 @@ def processTransaction(name):
 
 def newTransaction(name,date,bank_details,transaction_details,deposit,withdraw):
     userdata=name + "," + date + "," + bank_details + "," + transaction_details + "," + deposit + "," + withdraw + "\n"
+    spending=name+","+"Jan"+","+"Withdraw"+","+withdraw+"\n"
+    user=open("SpendingAnalytics.txt","a")
     user_file=open("Transaction.txt","a")
     user_file.write(userdata)
+    user.write(spending)
 
-
+def CurrentTransaction(name, month, type):
+    t_file = open('SpendingAnalytics.txt', 'r')
+    total = 0
+    for trans in t_file:
+        list = trans.split(',')
+        if list[0] == name and list[1] == month and list[2] == type:
+            total += float(list[3])
+    return total
 
