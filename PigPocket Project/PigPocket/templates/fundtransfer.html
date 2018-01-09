@@ -1,0 +1,234 @@
+<!--Author:Chan Yong Lin(174548y)-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pig Pocket|Fund Transfer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <style>
+ body {
+        font-family: "Lato", sans-serif;
+    }
+
+       table{width:70%;border-collapse: collapse;margin:auto;}
+
+       #customers {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 70%;
+}
+
+        #customers td, #customers th {
+        border: 1px solid #ddd;
+        padding: 8px;
+}
+
+        #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+        #customers tr:hover {background-color: #ddd;}
+
+        #customers th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: mediumpurple;
+        color: white;
+}
+
+  #myInput {
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 70%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+  margin-left:15%;
+}
+
+#customers {
+  border-collapse: collapse;
+  width: 70%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#customers th, #customers td {
+  text-align: left;
+  padding: 12px;
+}
+
+#customers tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#customers tr.header, #customers tr:hover {
+  background-color: #f1f1f1;
+}
+
+h2{ background-color: pink;
+text-align: left}
+
+        .mySearch {
+			background-image: url('/static/images/search.png');
+			background-position: 14px 12px;
+			background-size: 2% 40%;
+			background-repeat: no-repeat;
+			font-size: 16px;
+			padding: 14px 20px 12px 45px;
+			border: none;
+		}
+    </style>
+</head>
+<body>
+    {% extends 'layout.html' %}
+    {% block body %}
+    {% from "includes/_formhelper.html" import render_field %}
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                {% for error in field_errors %}
+                    <li>{{ form[field_name].label }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <h1 style="text-align:center;font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace;font-weight: bold;">Fund Transfer</h1>
+        <input type="text" id="myInput" class="mySearch" onkeyup="search();" placeholder="Search for transactions..">
+
+        <table border="1" id="customers" style="width:70%;">
+        <th colspan="5">Fund Transfer Details:</th>
+        <tr class="header"><td>Date:</td><td>Bank details</td><td>Transaction details:</td><td>Deposit</td><td>Withdrawal</td></tr>
+
+            {% for Trans in Transaction %}
+            <tr>
+                <td>{{ Trans.get_date() }}</td>
+                <td>{{ Trans.get_bank_details() }}</td>
+                <td>{{ Trans.get_transaction_details() }}</td>
+                {% if Trans.get_deposit()=="None" %}
+                    <td>{{ Trans.get_deposit() }}</td>
+                {% else %}
+                    <td>${{ Trans.get_deposit() }}</td>
+                {% endif %}
+
+                {% if "None" in Trans.get_withdraw() %}
+                    <td>{{ Trans.get_withdraw() }}</td>
+                {% else %}
+                    <td>${{ Trans.get_withdraw() }}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+
+            <tr><td colspan="4" style="font-weight: bold">Total Deposit</td><td>${{totaldeposit}}</td></tr>
+            <tr><td colspan="4" style="font-weight: bold">Total Withdraw:</td><td>${{totalwithdraw}}</td></tr>
+    </table>
+            <br>
+            <button onclick="document.getElementById('popout').style.display='block'" class="w3-button w3-black" style="margin-left: 15%;">
+                Add fund transfer</button>
+
+              <div id="popout" class="w3-modal">
+        <div class="w3-modal-content">
+          <div class="w3-container">
+            <span onclick="document.getElementById('popout').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+              <h2>To:</h2>
+
+      <form method="POST" action="/fundTransfer">
+
+    <div class="form-group">
+        {{ render_field(form.transaction_details, class_="form-control") }}
+    </div>
+
+            <div class="form-group">
+                {{ render_field(form.account_type,class_="form-control") }}
+            </div>
+
+
+
+           <div class="form-group">
+               {{ render_field(form.account_number,class_="form-control") }}
+           </div>
+
+              <br><br>
+
+                  <h2>From:</h2>
+    <div class="form-group">
+        {{ render_field(form.bank_details, class_="form-control") }}
+    </div>
+
+
+
+            <div class="form-group">
+                {{ render_field(form.withdraw, class_="form-control") }}
+                </div>
+
+              <br><br>
+          <input type="submit" value="Submit" class="btn btn-info" onclick="check()"/>
+
+
+      </form>
+          </div>
+        </div>
+              </div>
+
+       <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+        </script>
+
+
+    <script>
+    function search() {
+      var input, filter, table, tr, td1,td2,td3,td4,td5, i;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("customers");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td1 = tr[i].getElementsByTagName("td")[0];
+        td2 = tr[i].getElementsByTagName("td")[1];
+        td3 = tr[i].getElementsByTagName("td")[2];
+        td4 = tr[i].getElementsByTagName("td")[3];
+        td5 = tr[i].getElementsByTagName("td")[4];
+
+        if (td1) {
+          if (td1.innerHTML.toUpperCase().indexOf(filter) > -1||td2.innerHTML.toUpperCase().indexOf(filter) > -1||td3.innerHTML.toUpperCase().indexOf(filter) > -1
+          ||td4.innerHTML.toUpperCase().indexOf(filter) > -1||td5.innerHTML.toUpperCase().indexOf(filter) > -1) {
+              tr[1].style.display="";
+              tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+
+    }
+    </script>
+
+    <script>
+       function check() {
+           var x = confirm("Are you sure to transfer?");
+
+       }
+    </script>
+
+    {% endblock %}
+
+</body>
+</html>
+
+

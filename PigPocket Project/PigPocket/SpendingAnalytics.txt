@@ -1,0 +1,15 @@
+Yonglin,Dec,Deposit,900
+Audrey,Dec,Withdraw,20.65
+Yonglin,Dec,Withdraw,5.39
+Peizhen,Dec,Withdraw,79.80
+Peizhen,Dec,Deposit,50.90
+Yonglin,Dec,Withdraw,6.99
+Audrey,Jan,Withdraw,750
+Peizhen,Jan,Deposit,980.66
+Audrey,Jan,Withdraw,76
+Yonglin,Jan,Withdraw,165
+Audrey,Jan,Withdraw,989.99
+Yonglin,Jan,Deposit,1007.89
+Yonglin,Jan,Withdraw,80
+Yonglin,Jan,Withdraw,109.87
+Audrey,Jan,Withdraw,90
