@@ -1,0 +1,8 @@
+Steven,DBS,010-4-444444,savings,withdraw,Dec,100.00
+Steven,DBS,010-1-111111,current,deposit,Dec,25000.00
+Steven,OCBC,550-10-89550,savings,withdraw,Dec,300.00
+Kelly,UOB,910-20-31012,hybrid(savings + current),deposit,Jan,5000.00
+Kelly,UOB,910-20-31012,hybrid(savings + current),withdraw,Jan,50.00
+Steven,OCBC,550-10-89550,savings,deposit,Dec,3000.00
+Steven,DBS,010-1-111111,current,withdraw,Jan,500.00
+Steven,DBS,010-4-444444,savings,deposit,Jan,600.00

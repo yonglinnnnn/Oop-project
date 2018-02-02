@@ -1,0 +1,214 @@
+<!--Author:Chan Yong Lin(174548y)-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pig Pocket|Spending Analytics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <link href="PigPocket/static/css/SpendingAnalytics.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <style>
+    body {
+        font-family: "Lato", sans-serif;
+    }
+
+    h3{font-weight:bold;
+       text-align: center;
+       font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace}
+
+    h2{font-size:20px;
+        font-weight:bold;
+        text-align: center;
+        font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace}
+
+    div #borders {
+    border-style: solid;
+    width:80%;
+    margin:auto;
+    margin-bottom:100px;
+    background-color:#FAE9E4;
+    text-align: center;
+}
+    ul li {list-style-position: inside;}
+    </style>
+</head>
+<body>
+    {% extends 'layout.html' %}
+    {% block body %}
+
+    <div class="w3-container">
+<h1 style="text-align:center;font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace;font-weight: bold;">{{session["userid"]}}'s Spending Analytics</h1>
+
+        {% if totalprevdeposit==0 and totalprevwithdraw==0 %}
+        <h4 style="margin-left:70px;margin-top:70px;font-weight: bold;">No transactions for {{prevmonth}}</h4>
+        {% else %}
+<div id="piechart" style="float:left;display:inline-block;"></div>
+        {% endif %}
+
+        {% if totaldeposit==0 and totalwithdraw==0 %}
+        <h4 style="float:right;margin-right:70px;margin-top:5px;font-weight: bold;">No transaction for {{month}}</h4>
+        {% else %}
+<div id="piechart2" style="float:right;display:inline-block;"></div>
+        {% endif %}
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+<div id="borders">
+    <h2>This month deposit: ${{totaldeposit}} <br>
+        This month withdraw: ${{totalwithdraw}}
+    </h2>
+    {% if totaldeposit < totalwithdraw %}
+    <ul>
+        <li style="color:red">${{"%.2f"%withdrawdifference|float}} more withdrawal amount than deposit</li>
+        <li style="color:rebeccapurple">Tend to buy what you want.</li>
+        <li style="color:blue">Spur of the moment, unplanned decision to buy, made just before a purchase.</li>
+    </ul>
+    <h3>Some tips:</h3>
+    <ol style="text-align: center;list-style-position: inside;font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace">
+    <li style="color:green">Record and track your spendings</li>
+    <li style="color:orange;">Cook for yourself occasionally to save money</li>
+    <li style="color:blue;">Know what is your needs and wants</li>
+    <li style="color:purple">Set a limit of how much you can spend monthly</li>
+    </ol>
+
+    {% elif totaldeposit > totalwithdraw %}
+    <ul>
+        <li style="color:red">${{"%.2f"%depositdifference|float}} more deposit amount than withdraw</li>
+        <li style="color:rebeccapurple">Most probably are conservative of your own spendings.</li>
+    </ul>
+    <h3>Some tips:</h3>
+    <ol style="text-align: center;list-style-position: inside;font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace">
+    <li style="color:green">Save more by limiting yourself to a specific sum of money</li>
+    <li style="color:purple;">Look out for discount that will let you save even more</li>
+    <li style="color:blue;">Know when to stop when you shop</li>
+    </ol>
+
+    {% else %}
+    <ul>
+        <li style="color:red">Deposit = Withdraw</li>
+        <li style="color:rebeccapurple">Good at balancing spendings with savings.</li>
+        <li style="color:blue">People like you always think first before spending. </li>
+        <h3>Some tips:</h3>
+<ol style="text-align: center;list-style-position: inside;font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace">
+<li style="color:green">Set aside specific money where you can spend monthly to save more</li>
+<li style="color:orange;">Record your own spendings</li>
+<li style="color:blue;">Limit yourself when you shop</li>
+<li style="color:purple">Know what is your needs and wants</li>
+</ol>
+
+    </ul>
+    {% endif %}
+
+    </div>
+</div>
+
+    {% if totalprevdeposit==0 and totalprevwithdraw==0 %}
+
+    {% else %}
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Transaction', '$'],
+  ['Deposit',{{totalprevdeposit}}],
+  ['Withdraw',{{totalprevwithdraw}}],
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Previous month: {{prevmonth}}', 'width':700, 'height':700};
+
+  // Display the chart inside the <div> element with id="piechart"
+   var formatter = new google.visualization.NumberFormat({decimalSymbol: '.',groupingSymbol: ',', negativeColor: 'red', negativeParens: true, prefix: '$ '});
+  formatter.format(data, 1);
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+
+         google.visualization.events.addListener(chart, 'select', selectHandler);
+
+        var label1 = data.pieSliceText('label');
+
+        // The selection handler.
+        // Loop through all items in the selection and concatenate
+        // a single message from all of them.
+  function selectHandler() {
+    var selection = chart.getSelection();
+    if (selection.length) {
+        var pieSliceLabel = data.getValue(selection[0].row, 0);
+           if (pieSliceLabel=="Deposit"){
+            window.location.href ="/transaction";}
+        else if (pieSliceLabel=="Withdraw"){
+            window.location.href="/transaction"}
+    }
+}
+}
+</script>
+ {% endif %}
+
+     {% if totaldeposit==0 and totalwithdraw==0 %}
+    {% else %}
+<script>
+    // Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Transaction', '$'],
+  ['Deposit',{{totaldeposit}}],
+  ['Withdraw', {{totalwithdraw}}],
+
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Current month: {{month}}', 'width':700, 'height':700};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+   var formatter = new google.visualization.NumberFormat({decimalSymbol: '.',groupingSymbol: ',', negativeColor: 'red', negativeParens: true, prefix: '$ '});
+  formatter.format(data, 1);
+  chart.draw(data, options);
+
+         google.visualization.events.addListener(chart, 'select', selectHandler);
+
+        var label1 = data.pieSliceText('label');
+
+        // The selection handler.
+        // Loop through all items in the selection and concatenate
+        // a single message from all of them.
+  function selectHandler() {
+    var selection = chart.getSelection();
+    if (selection.length) {
+        var pieSliceLabel = data.getValue(selection[0].row, 0);
+        if (pieSliceLabel=="Deposit"){
+            window.location.href ="/transaction";}
+        else if (pieSliceLabel=="Withdraw"){
+            window.location.href="/transaction"}
+    }
+}
+}
+</script>
+{% endif %}
+  <script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+    </script>
+{% endblock %}
+
+
+</body>
+</html>

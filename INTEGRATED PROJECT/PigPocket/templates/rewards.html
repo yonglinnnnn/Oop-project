@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="PigPocket/static/css/rewards.css"/>
+    <link rel="stylesheet" href="PigPocket/static/js/rewards.js"/>
+
+<style>
+    body {
+        font-family: "Lato", sans-serif;
+    }
+
+    #rewardContainer{
+    }
+
+    .rewardDiv{
+        width: 20%;
+        display: inline-block;
+        margin: 1% 1%;
+    }
+
+    table {
+        border-collapse: collapse;
+        text-align: center;
+    }
+
+    table, td, th ,tr{
+        border: 3px solid deeppink;
+        padding:5px;
+        margin:auto;
+        width:50%;
+        text-align:center;
+    }
+
+
+    #redeemed {
+        border-collapse: collapse;
+        width: 50%;
+        margin: auto;
+    }
+    #redeemed td, #redeemed th, #redeemed tr {
+        border:1px solid #dddd;
+        padding: 8px;
+        text-align:center;
+    }
+
+    #tier {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 70%;
+        margin:auto;
+
+    }
+
+    #tier td, #tier th {
+        border: 1px solid #ddd;
+        padding: 5px;
+        text-align: center;
+    }
+
+</style>
+</head>
+
+
+<body>
+
+    {% extends 'layout.html' %}
+    {% block body %}
+        {% from "includes/_formhelper.html" import render_field %}
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                {% for error in field_errors %}
+                    <li>{{ form[field_name].label }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <h2 style="text-align: center;"><span style="color:darkred">Points Available:<span id="points" style="color: darkred">{{ count }}</span></span></h2>
+    <div class="w3-container">
+    <p style="float:right;"><button onclick="document.getElementById('redeemrewards').style.display='block'" class="w3-button w3-pink">Redeemed Rewards</button></p>
+                <div id="redeemrewards" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('redeemrewards').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <center><h2 style="color:darkred">Redeemed Rewards</h2></center>
+                            <table id="redeemed">
+
+                            <tr>
+                                <th>Points</th>
+                                <th>Rewards</th>
+                                <th>Date of redemption</th>
+
+                            </tr>
+                                {% for i in redeemed %}
+                            <tr>
+                                <td>{{ i.get_point() }}</td>
+                                <td>{{ i.get_reward() }}</td>
+                                <td>&nbsp;{{ i.get_date() }}&nbsp;</td>
+
+                            </tr>
+                            {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+    </div>
+    <p style="width: 12.5%;">==List of rewards available==</p>
+
+    {% if count>=50 and d11>now %}
+
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/benjerry.jpg" alt="benjerry" width="200px" height="200px"></p>
+            <p>Ben & Jerry's voucher voucher</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code11').style.display='block'" class="w3-button w3-black">50 pts</button></p>
+                <div id="code11" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code11').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$10 Ben and Jerry's voucher</p>
+                            <p>50 points</p>
+                            <p>Rewards expires on 31 May 2018</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available for all Ben and Jerry products</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code11.11').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code11.11" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code11.11').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <form method="POST" action="/rewards">
+                                            <div class="form-group">
+                                    {{ render_field(form.choice11, class_="form-control") }}
+                                                 <input type="submit" value="Submit" class="btn btn-info"/>
+                                             </div>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+{% if count>=100 and d4>now %}
+    <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/polar.jpg" alt="polar" width="200px" height="200px"></p>
+            <p>Polar Puffs and Cakes voucher</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code4').style.display='block'" class="w3-button w3-black">100 pts</button></p>
+                <div id="code4" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code4').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$10 Polar puffs and cakes voucher</p>
+                            <p>100 points</p>
+                            <p>Rewards expires on 31 July 2018</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all Polar outlet</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code4.4').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code4.4" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code4.4').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <form method="POST" action="/rewards">
+                                            <div class="form-group">
+                                    {{ render_field(form.choice4, class_="form-control") }}
+                                                 <input type="submit" value="Submit" class="btn btn-info"/>
+                                             </div>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if count>=100 and d6>now %}
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/fairprice.png" alt="crystaljade" width="200px" height="200px"></p>
+            <p>Fairprice voucher</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code6').style.display='block'" class="w3-button w3-black">100 pts</button></p>
+                <div id="code6" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code6').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$20 Fairprice voucher</p>
+                            <p>100 points</p>
+                            <p>Rewards expires on 30 June 2018</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all fairprice store</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code6.6').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code6.6" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code6.6').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <form method="POST" action="/rewards">
+                                            <div class="form-group">
+                                    {{ render_field(form.choice6, class_="form-control") }}
+                                                 <input type="submit" value="Submit" class="btn btn-info"/>
+                                             </div>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endif %}
+    {% if count>=100 and d9>now %}
+    <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/swensen.jpg" alt="swensen" width="200px" height="200px"></p>
+            <p>Swensen's coupon</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code9').style.display='block'" class="w3-button w3-black">100 pts</button></p>
+                <div id="code9" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code9').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$10 Swensen's coupon</p>
+                            <p>100 points</p>
+                            <p>Rewards expires on 31 December 2018</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all Swensen's outlet</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code9.9').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code9.9" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code9.9').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <form method="POST" action="/rewards">
+                                            <div class="form-group">
+                                    {{ render_field(form.choice9, class_="form-control") }}
+                                                 <input type="submit" value="Submit" class="btn btn-info"/>
+                                             </div>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+{% if count>=200 and d1>now %}
+    <div>
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/goldenvillage.jpg" alt="goldenvillage" width="200px" height="200px"></p>
+            <p>Golden Village ticket</p>
+            <div class="w3-container">
+                <button onclick="document.getElementById('code1').style.display='block'" class="w3-button w3-black">200 pts</button>
+                <div id="code1" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code1').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$10 Golden village movie ticket</p>
+                            <p>200 points</p>
+                            <p>Reward expires on 31 August 2018</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all golden village outlets</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code1.1').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code1.1" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code1.1').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <form method="POST" action="/rewards">
+                                            <div class="form-group">
+                                    {{ render_field(form.choice1, class_="form-control") }}
+                                                <input type="submit" value="Submit" class="btn btn-info"/>
+                                             </div>
+                                            </form>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% if count>=200 and d2>now %}
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/restaurant.jpg" alt="restaurant" width="200px" height="200px"></p>
+            <p>Restaurant coupon</p>
+            <div class="w3-container">
+                <button onclick="document.getElementById('code2').style.display='block'" class="w3-button w3-black">200 pts</button>
+                <div id="code2" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code2').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$20 restaurant coupon</p>
+                            <p>200 points</p>
+                            <p>Reward expires on 31 August 2018</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all related restaurant</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code2.2').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code2.2" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code2.2').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                             <form method="POST" action="/rewards">
+                                            <div class="form-group">
+                                    {{ render_field(form.choice2, class_="form-control") }}
+                                                <input type="submit" value="Submit" class="btn btn-info"/>
+                                             </div>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endif %}
+{% if count>=200 and d5>now %}
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/crystaljade.jpg" alt="crystaljade" width="200px" height="200px"></p>
+            <p>Crystal jade coupon</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code5').style.display='block'" class="w3-button w3-black">200 pts</button></p>
+                <div id="code5" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code5').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$20 Crystal Jade coupon</p>
+                            <p>200 points</p>
+                            <p>Rewards expires on 30 June 2018</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all crystal jade restaurant</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code5.5').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code5.5" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code5.5').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <form method="POST" action="/rewards">
+                                            <div class="form-group">
+                                    {{ render_field(form.choice5, class_="form-control") }}
+                                                 <input type="submit" value="Submit" class="btn btn-info"/>
+                                             </div>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endif %}
+    {% if count>=200 and d8>now %}
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/sakae.jpg" alt="sakae" width="200px" height="200px"></p>
+            <p>Sakae Sushi coupon</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code8').style.display='block'" class="w3-button w3-black">200 pts</button></p>
+                <div id="code8" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code8').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$20 Sakae Sushi coupon</p>
+                            <p>200 points</p>
+                            <p>Rewards expires on 31 December 2018</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all Sakae sushi outlet</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code8.8').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code8.8" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code8.8').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <form method="POST" action="/rewards">
+                                            <div class="form-group">
+                                    {{ render_field(form.choice8, class_="form-control") }}
+                                                 <input type="submit" value="Submit" class="btn btn-info"/>
+                                             </div>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endif %}
+    {% if count>=200 and d10>now %}
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/ikea.jpg" alt="ikea" width="200px" height="200px"></p>
+            <p>Ikea voucher</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code10').style.display='block'" class="w3-button w3-black">200 pts</button></p>
+                <div id="code10" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code10').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$30 iKea's voucher</p>
+                            <p>200 points</p>
+                            <p>Rewards expires on 31 May 2018</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all Ikea outlet</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code10.10').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code10.10" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code10.10').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <form method="POST" action="/rewards">
+                                            <div class="form-group">
+                                    {{ render_field(form.choice10, class_="form-control") }}
+                                                 <input type="submit" value="Submit" class="btn btn-info"/>
+                                             </div>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endif %}
+{% if count>=300 and d3>now %}
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/capitalland.jpg" alt="capitalland" width="200px" height="200px"></p>
+            <p>Capital Land voucher</p>
+            <div class="w3-container">
+                <button onclick="document.getElementById('code3').style.display='block'" class="w3-button w3-black">300 pts</button>
+                <div id="code3" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code3').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$30 Capital Land voucher</p>
+                            <p>300 points</p>
+                            <p>Rewards expires on 31 July 2018</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all Capital Land mall</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code3.3').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code3.3" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code3.3').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <form method="POST" action="/rewards">
+                                            <div class="form-group">
+                                    {{ render_field(form.choice3, class_="form-control") }}
+                                                <input type="submit" value="Submit" class="btn btn-info"/>
+                                             </div>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endif %}
+
+{% if count>=300 and d7>now %}
+        <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/toyrus.jpg" alt="toyrus" width="200px" height="200px"></p>
+            <p>Toyrus voucher</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code7').style.display='block'" class="w3-button w3-black">300 pts</button></p>
+                <div id="code7" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code7').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$20 toyrus voucher</p>
+                            <p>300 points</p>
+                            <p>Rewards expires on 31 December 2018</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available at all toyrus outlet</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code7.7').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code7.7" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code7.7').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <form method="POST" action="/rewards">
+                                            <div class="form-group">
+                                    {{ render_field(form.choice7, class_="form-control") }}
+                                                 <input type="submit" value="Submit" class="btn btn-info"/>
+                                             </div>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+{% endif %}
+{% if count>=400 and d12>now %}
+    <div class="rewardDiv">
+            <p><img src="/static/images/Rewards_ images/nex.png" alt="nex" width="200px" height="200px"></p>
+            <p>Nex shopping mall voucher</p>
+            <div class="w3-container">
+                <p><button onclick="document.getElementById('code12').style.display='block'" class="w3-button w3-black">400 pts</button></p>
+                <div id="code12" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container">
+                            <span onclick="document.getElementById('code12').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p style="color:darkred">Product descrition:</p>
+                            <p>$100 Nex voucher</p>
+                            <p>400 points</p>
+                            <p>Rewards expires on 28 February 2018</p>
+                            <hr>
+                            <ul style="color:darkred">Terms and Condition:
+                                <li>Product will be mailed in 7 days</li>
+                                <li>Product will expired within 3 months after redeem</li>
+                            </ul>
+                            <hr>
+                            <p style="color:darkred">Redemption Outlets:</p>
+                            <p>Available for all Nex shops</p>
+                            <div class="w3-container">
+                                <button onclick="document.getElementById('code12.12').style.display='block'" class="w3-button w3-black">Redeem</button>
+                                <div id="code12.12" class="w3-modal">
+                                    <div class="w3-modal-content">
+                                        <div class="w3-container">
+                                            <span onclick="document.getElementById('code12.12').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                            <p style="color:darkred">Confirm your redemption</p>
+                                            <hr>
+                                            <form method="POST" action="/rewards">
+                                            <div class="form-group">
+                                    {{ render_field(form.choice12, class_="form-control") }}
+                                                 <input type="submit" value="Submit" class="btn btn-info"/>
+                                             </div>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endif %}
+
+    <center><h2 style="color:deeppink;">Tier</h2></center>
+
+<table id="tier">
+  <tr>
+    <th>Amount($)</th>
+    <th>Points</th>
+  </tr>
+  <tr>
+    <td>save <200</td>
+    <td>No points accumulation</td>
+  </tr>
+  <tr>
+    <td>save 200-1000</td>
+    <td>2 points per $10 saved</td>
+  </tr>
+  <tr>
+    <td>save >1000</td>
+    <td>4 points per $10 saved</td>
+  </tr>
+</table>
+
+
+
+
+
+                <script>
+                function openNav() {
+                    document.getElementById("mySidenav").style.width = "250px";
+                }
+
+                function closeNav() {
+                    document.getElementById("mySidenav").style.width = "0";
+                }
+                </script>
+
+
+
+
+
+
+
+
+        {% endblock %}
+
+</body>
+</html>

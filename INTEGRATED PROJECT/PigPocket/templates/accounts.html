@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bank Accounts</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+
+    <style>
+        *{
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .wrapper{
+            width: 150px;
+            margin: 5% auto;
+        }
+
+        .single-wrapper{
+            width: 100%;
+            background-color: #d9d9d9;
+        }
+        .accountBar{
+            padding-right: 60px;
+            line-height: 30px;
+        }
+        .balance{
+            width: 100%;
+            padding: 10% 0;
+            background-color: green;
+        }
+
+        .filterSelection{
+            display: inline-block;
+            margin-right: 5%;
+        }
+
+        .rowHighlight:hover{
+            background-color: #f5f5f5;
+        }
+
+        #bankAccounts {
+            border-collapse: collapse;
+            width: 70%;
+            margin-left: 15%;
+        }
+
+        #bankAccounts th, #bankAccounts td {
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .bankTransactions {
+            border-collapse: collapse;
+            width: 70%;
+            margin: 0 auto;
+        }
+
+        .bankTransactions td, .bankTransactions th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        .bankTransactions tr:nth-child(even){background-color: #f2f2f2;}
+
+        .bankTransactions th {
+            color: darkgrey;
+        }
+
+        .monthCSS{
+            margin-left: 15.5%;
+            margin-top:0.5%;
+        }
+    </style>
+</head>
+{% extends 'layout.html' %}
+    {% block body %}
+        <div class="text-center">
+            <h1>Bank Accounts</h1>
+        </div>
+        <div style="margin-left: 15%">
+            <div class="filterSelection">
+                <div style="width: 110%;">
+                    <p style="float: left; margin-top: 3%">Bank Branch: </p>
+                    <select id="view" style="background-color: #f1f1f1; margin-top: 3%; margin-left: 2%" onchange="toggleElement(this)">
+                        <option value="All">All</option>
+                        {% for branch in branches %}
+                            <option value={{branch}}>{{branch}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="filterSelection">
+                <div style="width: 110%;">
+                    <p style="float: left; margin-top: 3%">Account type: </p>
+                    <select id="view2" style="background-color: #f1f1f1; margin-top: 3%; margin-left: 2%" onchange="toggleElement2(this)">
+                        <option value="All">All</option>
+                        {% for type in types %}
+                            <option value="{{type}}">{{type}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <table id="bankAccounts">
+            <tr>
+                <th>Bank</th>
+                <th>Account no.</th>
+                <th>Account type</th>
+                <th>Interest(% P.A)</th>
+                <th>Original Balance($)</th>
+                <th>Balance($)</th>
+                <th></th>
+            </tr>
+            {% for account in accounts %}
+            <tr class="rowHighlight">
+                <td class="bankBranch">{{account.get_bankBranch()}}</td>
+                <td><a class="bankNum" style="cursor:pointer">{{account.get_bankNum()}}</a></td>
+                <td class="accountType">{{account.get_accountType()}}</td>
+                <td>{{account.get_interestRate()}}</td>
+                <td class="originalaccountBal">{{account.get_originalaccountBal()}}</td>
+                <td class="accountBal">{{account.get_accountBal()}}</td>
+                <td class="balanceBar">
+                    <div class="wrapper">
+                        <div class="single-wrapper">
+                            <div class="accountBar balance"></div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div id="bankTransactionTable" style="display: none;">
+            <hr style="height:1px;background-color:gray;">
+            <p id="transactionHistory" style="margin-left: 10%; display: none">Transaction History for bank <span id="bankAccount"></span> <span style="color:darkgrey">(as at {{dayNow}} {{monthNow}} {{yearNow}})</span></p>
+            <p id="FixedDepositInformation" style="margin-left: 10%; display: none">Fixed Deposit Information for bank <span id="bankAccount2"></span> <span style="color:darkgrey">(as at {{dayNow}} {{monthNow}} {{yearNow}})</span></p>
+            <p class="monthCSS firstBankMonth" style="display: none">Current month: {{monthNow2}} {{yearNow}}</p>
+            <table class="bankTransactions" id="firstBank" style="display: none">
+                <tr>
+                    <th>Date</th>
+                    <th>Transaction Details</th>
+                    <th style="text-align: right">Debit<br>(Withdrawal)(S$)</th>
+                    <th style="text-align: right">Credit<br>(Deposit)(S$)</th>
+                </tr>
+                {% for bankTrans in transactions %}
+                <tr>
+                    <td>{{bankTrans.get_date()}}</td>
+                    <td>{{bankTrans.get_transaction_details()}}</td>
+                    <td style="text-align: right">{{bankTrans.get_deposit()}}</td>
+                    <td style="text-align: right">{{bankTrans.get_withdraw()}}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="2">Total Debit and Credit</td>
+                    <td style="text-align: right">{{xxx_x_444444_totalDeposit}}</td>
+                    <td style="text-align: right">{{xxx_x_444444_totalWithdrawal}}</td>
+                </tr>
+            </table>
+            <p class="monthCSS firstBankMonth" style="display: none">Previous month: {{monthPrev}} {{yearPrev}}</p>
+            <table class="bankTransactions" id="prevfirstBank" style="display: none">
+                <tr>
+                    <th>Date</th>
+                    <th>Transaction Details</th>
+                    <th style="text-align: right">Debit<br>(Withdrawal)(S$)</th>
+                    <th style="text-align: right">Credit<br>(Deposit)(S$)</th>
+                </tr>
+                {% for bankTrans in prevtransactions %}
+                <tr>
+                    <td>{{bankTrans.get_date()}}</td>
+                    <td>{{bankTrans.get_transaction_details()}}</td>
+                    <td style="text-align: right">{{bankTrans.get_deposit()}}</td>
+                    <td style="text-align: right">{{bankTrans.get_withdraw()}}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="2">Total Debit and Credit</td>
+                    <td style="text-align: right">{{prev_xxx_x_444444_totalDeposit}}</td>
+                    <td style="text-align: right">{{prev_xxx_x_444444_totalWithdrawal}}</td>
+                </tr>
+            </table>
+            <p class="monthCSS secondBankMonth" style="display: none">Current month: {{monthNow2}} {{yearNow}}</p>
+            <table class="bankTransactions" id="secondBank" style="display: none">
+                <tr>
+                    <th>Date</th>
+                    <th>Transaction Details</th>
+                    <th style="text-align: right">Debit<br>(Withdrawal)(S$)</th>
+                    <th style="text-align: right">Credit<br>(Deposit)(S$)</th>
+                </tr>
+                {% for bankTrans in transactions2 %}
+                <tr>
+                    <td>{{bankTrans.get_date()}}</td>
+                    <td>{{bankTrans.get_transaction_details()}}</td>
+                    <td style="text-align: right">{{bankTrans.get_deposit()}}</td>
+                    <td style="text-align: right">{{bankTrans.get_withdraw()}}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="2">Total Debit and Credit</td>
+                    <td style="text-align: right">{{xxx_x_111111_totalDeposit}}</td>
+                    <td style="text-align: right">{{xxx_x_111111_totalWithdrawal}}</td>
+                </tr>
+            </table>
+            <p class="monthCSS secondBankMonth" style="display: none">Previous month: {{monthPrev}} {{yearPrev}}</p>
+            <table class="bankTransactions" id="prevsecondBank" style="display: none">
+                <tr>
+                    <th>Date</th>
+                    <th>Transaction Details</th>
+                    <th style="text-align: right">Debit<br>(Withdrawal)(S$)</th>
+                    <th style="text-align: right">Credit<br>(Deposit)(S$)</th>
+                </tr>
+                {% for bankTrans in prevtransactions2 %}
+                <tr>
+                    <td>{{bankTrans.get_date()}}</td>
+                    <td>{{bankTrans.get_transaction_details()}}</td>
+                    <td style="text-align: right">{{bankTrans.get_deposit()}}</td>
+                    <td style="text-align: right">{{bankTrans.get_withdraw()}}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="2">Total Debit and Credit</td>
+                    <td style="text-align: right">{{prev_xxx_x_111111_totalDeposit}}</td>
+                    <td style="text-align: right">{{prev_xxx_x_111111_totalWithdrawal}}</td>
+                </tr>
+            </table>
+            <p class="monthCSS thirdBankMonth" style="display: none">Current month: {{monthNow2}} {{yearNow}}</p>
+            <table class="bankTransactions" id="thirdBank" style="display: none">
+                <tr>
+                    <th>Date</th>
+                    <th>Transaction Details</th>
+                    <th style="text-align: right">Debit<br>(Withdrawal)(S$)</th>
+                    <th style="text-align: right">Credit<br>(Deposit)(S$)</th>
+                </tr>
+                {% for bankTrans in transactions3 %}
+                <tr>
+                    <td>{{bankTrans.get_date()}}</td>
+                    <td>{{bankTrans.get_transaction_details()}}</td>
+                    <td style="text-align: right">{{bankTrans.get_deposit()}}</td>
+                    <td style="text-align: right">{{bankTrans.get_withdraw()}}</td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="2">Total Debit and Credit</td>
+                    <td style="text-align: right">{{xxx_xx_89550_totalDeposit}}</td>
+                    <td style="text-align: right">{{xxx_xx_89550_totalWithdrawal}}</td>
+                </tr>
+            </table>
+            <p class="monthCSS thirdBankMonth" style="display: none">Previous month: {{monthPrev}} {{yearPrev}}</p>
+            <table class="bankTransactions" id="prevthirdBank" style="display: none">
+                <tr>
+                    <th>Date</th>
+                    <th>Transaction Details</th>
+                    <th style="text-align: right">Debit<br>(Withdrawal)(S$)</th>
+                    <th style="text-align: right">Credit<br>(Deposit)(S$)</th>
+                </tr>
+                {% for bankTrans in prevtransactions3 %}
+                <tr>
+                    <td>{{bankTrans.get_date()}}</td>
+                    <td>{{bankTrans.get_transaction_details()}}</td>
+                    <td style="text-align: right">{{bankTrans.get_deposit()}}</td>
+                    <td style="text-align: right">{{bankTrans.get_withdraw()}}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="2">Total Debit and Credit</td>
+                    <td style="text-align: right">{{prev_xxx_xx_89550_totalDeposit}}</td>
+                    <td style="text-align: right">{{prev_xxx_xx_89550_totalWithdrawal}}</td>
+                </tr>
+            </table>
+            <p class="monthCSS fourthBankMonth" style="display: none">Current month: {{monthNow2}} {{yearNow}}</p>
+            <table class="bankTransactions" id="fourthBank" style="display: none">
+                <tr>
+                    <th>Date</th>
+                    <th>Transaction Details</th>
+                    <th style="text-align: right">Debit<br>(Withdrawal)(S$)</th>
+                    <th style="text-align: right">Credit<br>(Deposit)(S$)</th>
+                </tr>
+                {% for bankTrans in transactions4 %}
+                <tr>
+                    <td>{{bankTrans.get_date()}}</td>
+                    <td>{{bankTrans.get_transaction_details()}}</td>
+                    <td style="text-align: right">{{bankTrans.get_deposit()}}</td>
+                    <td style="text-align: right">{{bankTrans.get_withdraw()}}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="2">Total Debit and Credit</td>
+                    <td style="text-align: right">{{xxx_xx_31012_totalDeposit}}</td>
+                    <td style="text-align: right">{{xxx_xx_31012_totalWithdrawal}}</td>
+                </tr>
+            </table>
+            <p class="monthCSS fourthBankMonth" style="display: none">Previous month: {{monthPrev}} {{yearPrev}}</p>
+            <table class="bankTransactions" id="prevfourthBank" style="display: none">
+                <tr>
+                    <th>Date</th>
+                    <th>Transaction Details</th>
+                    <th style="text-align: right">Debit<br>(Withdrawal)(S$)</th>
+                    <th style="text-align: right">Credit<br>(Deposit)(S$)</th>
+                </tr>
+                {% for bankTrans in prevtransactions4 %}
+                <tr>
+                    <td>{{bankTrans.get_date()}}</td>
+                    <td>{{bankTrans.get_transaction_details()}}</td>
+                    <td style="text-align: right">{{bankTrans.get_deposit()}}</td>
+                    <td style="text-align: right">{{bankTrans.get_withdraw()}}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="2">Total Debit and Credit</td>
+                    <td style="text-align: right">{{prev_xxx_xx_31012_totalDeposit}}</td>
+                    <td style="text-align: right">{{prev_xxx_xx_31012_totalWithdrawal}}</td>
+                </tr>
+            </table>
+            <div id="fifthBank" style="display: none">
+                {% for FD in range(0,fixedDepositList_length) %}
+                    {% if accounts[FD].get_bankNum() == '911-21-31013' %}
+                        <p>Fixed Deposit duration: {{accounts[FD].get_duration()}} years</p>
+                        <p>Principal date: {{accounts[FD].get_startDate()}}</p>
+                        <p>Matured date: {{accounts[FD].get_endDate()}}</p>
+                        <p>Principal Amount: ${{accounts[FD].get_originalaccountBal()}}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div id="sixthBank" style="display: none">
+                {% for FD in range(0,fixedDepositList_length) %}
+                    {% if accounts[FD].get_bankNum() == '550-10-89551' %}
+                        <p>Fixed Deposit duration: {{accounts[FD].get_duration()}} years</p>
+                        <p>Principal date: {{accounts[FD].get_startDate()}}</p>
+                        <p>Matured date: {{accounts[FD].get_endDate()}}</p>
+                        <p>Principal Amount: ${{accounts[FD].get_originalaccountBal()}}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <hr style="height:1px;background-color:gray;">
+            <h1 style="margin-left: 20%">Bank Promotions: </h1>
+            <div id="dbsSavingsPromo" style="display: none">
+                {% for bankPromo in DBSpromoList %}
+                <div style="display: block; margin-left: 20%">
+                    <div style="display: inline-block; margin-right: 5%; margin-top: 3%">
+                        <img height="200px" width="200px" src="{{bankPromo.get_promoPic()}}"/>
+                    </div>
+                    <div style="display: inline-block;">
+                        <p>Promotion name: {{bankPromo.get_promoName()}}</p>
+                        <p>Promotion Start: {{bankPromo.get_startDate()}}</p>
+                        <p>Promotion End: {{bankPromo.get_endDate()}}</p>
+                        <a href="{{bankPromo.get_promoURL()}}" target="_blank"><button>Find out more</button></a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div id="ocbcSavingsPromo" style="display: none">
+                {% for bankPromo in OCBCpromoList %}
+                <div style="display: block; margin-left: 20%">
+                    <div style="display: inline-block; margin-right: 5%; margin-top: 3%">
+                        <img height="200px" width="200px" src="{{bankPromo.get_promoPic()}}"/>
+                    </div>
+                    <div style="display: inline-block;">
+                        <p>Promotion name: {{bankPromo.get_promoName()}}</p>
+                        <p>Promotion Start: {{bankPromo.get_startDate()}}</p>
+                        <p>Promotion End: {{bankPromo.get_endDate()}}</p>
+                        <a href="{{bankPromo.get_promoURL()}}" target="_blank"><button>Find out more</button></a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    <script>
+        // this jquery function means that once the webpage(document) is loaded(ready), it will do the function which is
+        // to do the "for loop".
+        $(document).ready(function(){
+            for (var index = 0; index < document.getElementsByClassName("accountBal").length;) {
+                var original = document.getElementsByClassName("originalaccountBal")[index].innerHTML;
+                var accountType = document.getElementsByClassName('accountType')[index].innerHTML;
+                var i = document.getElementsByClassName("accountBal")[index].innerHTML;
+                i = parseFloat(i);
+                var balPercent = (i/original) * 100;
+                var warningCap = 500;
+                if (accountType == 'fixed deposit')
+                {
+                    document.getElementsByClassName("balanceBar")[index].style.opacity = "0";
+                }
+                else
+                {
+                    if (i <= original && i >= warningCap)
+                    {
+                        $('.balance:eq('+index+')').css({'width': balPercent + "%"});
+                        document.getElementsByClassName("balance")[index].style.backgroundColor = "green";
+                    }
+                    else if (i < warningCap)
+                    {
+                        $('.balance:eq('+index+')').css({'width': balPercent + "%"});
+                        document.getElementsByClassName("balance")[index].style.backgroundColor = "red";
+                    }
+                    else if (i > original)
+                    {
+                        $('.balance:eq('+index+')').css({'width': balPercent + "%"});
+                        document.getElementsByClassName("balance")[index].style.backgroundColor = "green";
+                    }
+                    // when bank accunt balance hit 0
+                    else
+                    {
+                        $('.balance:eq('+index+')').css({'width': 0 + "%"});
+                    }
+                }
+                index++
+            }
+        });
+
+        // filter function for bank branch
+        function toggleElement(obj)
+        {
+            var selectedItem = obj.options[obj.selectedIndex].value;
+            for (var index = 0; index < document.getElementsByClassName('bankBranch').length; index++)
+            {
+                if (selectedItem == 'DBS')
+                {
+                    if (document.getElementsByClassName('bankBranch')[index].innerHTML == 'DBS')
+                    {
+                        var dbs = document.getElementsByClassName('rowHighlight')[index];
+                        if(dbs.style.display == 'none')
+                        {
+                            dbs.style.display = '';
+                        }
+                        document.getElementById('bankTransactionTable').style.display = "none";
+                        document.getElementById('firstBank').style.display = "none";
+                        document.getElementById('prevfirstBank').style.display = "none";
+                        document.getElementById('secondBank').style.display = "none";
+                        document.getElementById('prevsecondBank').style.display = "none";
+                        document.getElementById('thirdBank').style.display = "none";
+                        document.getElementById('prevthirdBank').style.display = "none";
+                        document.getElementById('fourthBank').style.display = "none";
+                        document.getElementById('prevfourthBank').style.display = "none";
+                    }
+                    else if (document.getElementsByClassName('bankBranch')[index].innerHTML == 'OCBC')
+                    {
+                        var ocbc = document.getElementsByClassName('rowHighlight')[index];
+                        if(ocbc.style.display == '')
+                        {
+                            ocbc.style.display = 'none';
+                        }
+                    }
+                    else if (document.getElementsByClassName('bankBranch')[index].innerHTML == 'UOB')
+                    {
+                        var ocbc = document.getElementsByClassName('rowHighlight')[index];
+                        if(ocbc.style.display == '')
+                        {
+                            ocbc.style.display = 'none';
+                        }
+                    }
+                }
+                else if (selectedItem == 'OCBC')
+                {
+                    if (document.getElementsByClassName('bankBranch')[index].innerHTML == 'OCBC')
+                    {
+                        var ocbc = document.getElementsByClassName('rowHighlight')[index];
+
+                        if(ocbc.style.display == 'none')
+                        {
+                            ocbc.style.display = '';
+                        }
+                        document.getElementById('bankTransactionTable').style.display = "none";
+                        document.getElementById('firstBank').style.display = "none";
+                        document.getElementById('prevfirstBank').style.display = "none";
+                        document.getElementById('secondBank').style.display = "none";
+                        document.getElementById('prevsecondBank').style.display = "none";
+                        document.getElementById('thirdBank').style.display = "none";
+                        document.getElementById('prevthirdBank').style.display = "none";
+                        document.getElementById('fourthBank').style.display = "none";
+                        document.getElementById('prevfourthBank').style.display = "none";
+                    }
+                    else if (document.getElementsByClassName('bankBranch')[index].innerHTML == 'DBS')
+                    {
+                        var dbs = document.getElementsByClassName('rowHighlight')[index];
+                        if(dbs.style.display == '')
+                        {
+                            dbs.style.display = 'none';
+                        }
+                    }
+                    else if (document.getElementsByClassName('bankBranch')[index].innerHTML == 'UOB')
+                    {
+                        var dbs = document.getElementsByClassName('rowHighlight')[index];
+                        if(dbs.style.display == '')
+                        {
+                            dbs.style.display = 'none';
+                        }
+                    }
+                }
+                else if (selectedItem == 'UOB')
+                {
+                    if (document.getElementsByClassName('bankBranch')[index].innerHTML == 'UOB')
+                    {
+                        var ocbc = document.getElementsByClassName('rowHighlight')[index];
+
+                        if(ocbc.style.display == 'none')
+                        {
+                            ocbc.style.display = '';
+                        }
+                        document.getElementById('bankTransactionTable').style.display = "none";
+                        document.getElementById('firstBank').style.display = "none";
+                        document.getElementById('prevfirstBank').style.display = "none";
+                        document.getElementById('secondBank').style.display = "none";
+                        document.getElementById('prevsecondBank').style.display = "none";
+                        document.getElementById('thirdBank').style.display = "none";
+                        document.getElementById('prevthirdBank').style.display = "none";
+                        document.getElementById('fourthBank').style.display = "none";
+                        document.getElementById('prevfourthBank').style.display = "none";
+                    }
+                    else if (document.getElementsByClassName('bankBranch')[index].innerHTML == 'DBS')
+                    {
+                        var dbs = document.getElementsByClassName('rowHighlight')[index];
+                        if(dbs.style.display == '')
+                        {
+                            dbs.style.display = 'none';
+                        }
+                    }
+                    else if (document.getElementsByClassName('bankBranch')[index].innerHTML == 'OCBC')
+                    {
+                        var dbs = document.getElementsByClassName('rowHighlight')[index];
+                        if(dbs.style.display == '')
+                        {
+                            dbs.style.display = 'none';
+                        }
+                    }
+                }
+                else
+                {
+                    if (document.getElementsByClassName('bankBranch')[index].innerHTML == 'DBS')
+                    {
+                        var dbs = document.getElementsByClassName('rowHighlight')[index];
+                        dbs.style.display = '';
+                        document.getElementById('bankTransactionTable').style.display = "none";
+                        document.getElementById('firstBank').style.display = "none";
+                        document.getElementById('prevfirstBank').style.display = "none";
+                        document.getElementById('secondBank').style.display = "none";
+                        document.getElementById('prevsecondBank').style.display = "none";
+                        document.getElementById('thirdBank').style.display = "none";
+                        document.getElementById('prevthirdBank').style.display = "none";
+                        document.getElementById('fourthBank').style.display = "none";
+                        document.getElementById('prevfourthBank').style.display = "none";
+                    }
+                    else if (document.getElementsByClassName('bankBranch')[index].innerHTML == 'OCBC')
+                    {
+                        var ocbc = document.getElementsByClassName('rowHighlight')[index];
+                        ocbc.style.display = '';
+                        document.getElementById('bankTransactionTable').style.display = "none";
+                        document.getElementById('firstBank').style.display = "none";
+                        document.getElementById('prevfirstBank').style.display = "none";
+                        document.getElementById('secondBank').style.display = "none";
+                        document.getElementById('prevsecondBank').style.display = "none";
+                        document.getElementById('thirdBank').style.display = "none";
+                        document.getElementById('prevthirdBank').style.display = "none";
+                        document.getElementById('fourthBank').style.display = "none";
+                        document.getElementById('prevfourthBank').style.display = "none";
+                    }
+                    else if (document.getElementsByClassName('bankBranch')[index].innerHTML == 'UOB')
+                    {
+                        var ocbc = document.getElementsByClassName('rowHighlight')[index];
+                        ocbc.style.display = '';
+                        document.getElementById('bankTransactionTable').style.display = "none";
+                        document.getElementById('firstBank').style.display = "none";
+                        document.getElementById('prevfirstBank').style.display = "none";
+                        document.getElementById('secondBank').style.display = "none";
+                        document.getElementById('prevsecondBank').style.display = "none";
+                        document.getElementById('thirdBank').style.display = "none";
+                        document.getElementById('prevthirdBank').style.display = "none";
+                        document.getElementById('fourthBank').style.display = "none";
+                        document.getElementById('prevfourthBank').style.display = "none";
+                    }
+                }
+            }
+        }
+
+        // filter function for account types
+        function toggleElement2(obj)
+        {
+            var selectedItem = obj.options[obj.selectedIndex].value;
+            for (var index = 0; index < document.getElementsByClassName('accountType').length; index++)
+            {
+                if (selectedItem == 'savings')
+                {
+                    if (document.getElementsByClassName('accountType')[index].innerHTML == 'savings')
+                    {
+                        var savings = document.getElementsByClassName('rowHighlight')[index];
+
+                        if(savings.style.display == 'none')
+                        {
+                            savings.style.display = '';
+                        }
+                        document.getElementById('bankTransactionTable').style.display = "none";
+                        document.getElementById('firstBank').style.display = "none";
+                        document.getElementById('prevfirstBank').style.display = "none";
+                        document.getElementById('secondBank').style.display = "none";
+                        document.getElementById('prevsecondBank').style.display = "none";
+                        document.getElementById('thirdBank').style.display = "none";
+                        document.getElementById('prevthirdBank').style.display = "none";
+                        document.getElementById('fourthBank').style.display = "none";
+                        document.getElementById('prevfourthBank').style.display = "none";
+                    }
+                    else if (document.getElementsByClassName('accountType')[index].innerHTML == 'current')
+                    {
+                        var current = document.getElementsByClassName('rowHighlight')[index];
+                        if(current.style.display == '')
+                        {
+                            current.style.display = 'none';
+                        }
+                    }
+                    else if (document.getElementsByClassName('accountType')[index].innerHTML == 'hybrid(savings+current)')
+                    {
+                        var current = document.getElementsByClassName('rowHighlight')[index];
+                        if(current.style.display == '')
+                        {
+                            current.style.display = 'none';
+                        }
+                    }
+                    else if (document.getElementsByClassName('accountType')[index].innerHTML == 'fixed deposit')
+                    {
+                        var current = document.getElementsByClassName('rowHighlight')[index];
+                        if(current.style.display == '')
+                        {
+                            current.style.display = 'none';
+                        }
+                    }
+                }
+                else if (selectedItem == 'current')
+                {
+                    if (document.getElementsByClassName('accountType')[index].innerHTML == 'current')
+                    {
+                        var current = document.getElementsByClassName('rowHighlight')[index];
+
+                        if(current.style.display == 'none')
+                        {
+                            current.style.display = '';
+                        }
+                        document.getElementById('bankTransactionTable').style.display = "none";
+                        document.getElementById('firstBank').style.display = "none";
+                        document.getElementById('prevfirstBank').style.display = "none";
+                        document.getElementById('secondBank').style.display = "none";
+                        document.getElementById('prevsecondBank').style.display = "none";
+                        document.getElementById('thirdBank').style.display = "none";
+                        document.getElementById('prevthirdBank').style.display = "none";
+                        document.getElementById('fourthBank').style.display = "none";
+                        document.getElementById('prevfourthBank').style.display = "none";
+                    }
+                    else if (document.getElementsByClassName('accountType')[index].innerHTML == 'savings')
+                    {
+                        var savings = document.getElementsByClassName('rowHighlight')[index];
+                        if(savings.style.display == '')
+                        {
+                            savings.style.display = 'none';
+                        }
+                    }
+                    else if (document.getElementsByClassName('accountType')[index].innerHTML == 'hybrid(savings+current)')
+                    {
+                        var savings = document.getElementsByClassName('rowHighlight')[index];
+                        if(savings.style.display == '')
+                        {
+                            savings.style.display = 'none';
+                        }
+                    }
+                    else if (document.getElementsByClassName('accountType')[index].innerHTML == 'fixed deposit')
+                    {
+                        var savings = document.getElementsByClassName('rowHighlight')[index];
+                        if(savings.style.display == '')
+                        {
+                            savings.style.display = 'none';
+                        }
+                    }
+                }
+                else if (selectedItem == 'hybrid(savings+current)')
+                {
+                    if (document.getElementsByClassName('accountType')[index].innerHTML == 'hybrid(savings+current)')
+                    {
+                        var current = document.getElementsByClassName('rowHighlight')[index];
+
+                        if(current.style.display == 'none')
+                        {
+                            current.style.display = '';
+                        }
+                        document.getElementById('bankTransactionTable').style.display = "none";
+                        document.getElementById('firstBank').style.display = "none";
+                        document.getElementById('prevfirstBank').style.display = "none";
+                        document.getElementById('secondBank').style.display = "none";
+                        document.getElementById('prevsecondBank').style.display = "none";
+                        document.getElementById('thirdBank').style.display = "none";
+                        document.getElementById('prevthirdBank').style.display = "none";
+                        document.getElementById('fourthBank').style.display = "none";
+                        document.getElementById('prevfourthBank').style.display = "none";
+                    }
+                    else if (document.getElementsByClassName('accountType')[index].innerHTML == 'savings')
+                    {
+                        var savings = document.getElementsByClassName('rowHighlight')[index];
+                        if(savings.style.display == '')
+                        {
+                            savings.style.display = 'none';
+                        }
+                    }
+                    else if (document.getElementsByClassName('accountType')[index].innerHTML == 'current')
+                    {
+                        var savings = document.getElementsByClassName('rowHighlight')[index];
+                        if(savings.style.display == '')
+                        {
+                            savings.style.display = 'none';
+                        }
+                    }
+                    else if (document.getElementsByClassName('accountType')[index].innerHTML == 'fixed deposit')
+                    {
+                        var savings = document.getElementsByClassName('rowHighlight')[index];
+                        if(savings.style.display == '')
+                        {
+                            savings.style.display = 'none';
+                        }
+                    }
+                }
+                else if (selectedItem == 'fixed deposit')
+                {
+                    if (document.getElementsByClassName('accountType')[index].innerHTML == 'fixed deposit')
+                    {
+                        var current = document.getElementsByClassName('rowHighlight')[index];
+
+                        if(current.style.display == 'none')
+                        {
+                            current.style.display = '';
+                        }
+                        document.getElementById('bankTransactionTable').style.display = "none";
+                        document.getElementById('firstBank').style.display = "none";
+                        document.getElementById('prevfirstBank').style.display = "none";
+                        document.getElementById('secondBank').style.display = "none";
+                        document.getElementById('prevsecondBank').style.display = "none";
+                        document.getElementById('thirdBank').style.display = "none";
+                        document.getElementById('prevthirdBank').style.display = "none";
+                        document.getElementById('fourthBank').style.display = "none";
+                        document.getElementById('prevfourthBank').style.display = "none";
+                    }
+                    else if (document.getElementsByClassName('accountType')[index].innerHTML == 'savings')
+                    {
+                        var savings = document.getElementsByClassName('rowHighlight')[index];
+                        if(savings.style.display == '')
+                        {
+                            savings.style.display = 'none';
+                        }
+                    }
+                    else if (document.getElementsByClassName('accountType')[index].innerHTML == 'hybrid(savings+current)')
+                    {
+                        var savings = document.getElementsByClassName('rowHighlight')[index];
+                        if(savings.style.display == '')
+                        {
+                            savings.style.display = 'none';
+                        }
+                    }
+                    else if (document.getElementsByClassName('accountType')[index].innerHTML == 'current')
+                    {
+                        var savings = document.getElementsByClassName('rowHighlight')[index];
+                        if(savings.style.display == '')
+                        {
+                            savings.style.display = 'none';
+                        }
+                    }
+                }
+                else
+                {
+                    if (document.getElementsByClassName('accountType')[index].innerHTML == 'savings')
+                    {
+                        var savings = document.getElementsByClassName('rowHighlight')[index];
+                        savings.style.display = '';
+                        document.getElementById('bankTransactionTable').style.display = "none";
+                        document.getElementById('firstBank').style.display = "none";
+                        document.getElementById('prevfirstBank').style.display = "none";
+                        document.getElementById('secondBank').style.display = "none";
+                        document.getElementById('prevsecondBank').style.display = "none";
+                        document.getElementById('thirdBank').style.display = "none";
+                        document.getElementById('prevthirdBank').style.display = "none";
+                        document.getElementById('fourthBank').style.display = "none";
+                        document.getElementById('prevfourthBank').style.display = "none";
+                    }
+                    else if (document.getElementsByClassName('accountType')[index].innerHTML == 'current')
+                    {
+                        var current = document.getElementsByClassName('rowHighlight')[index];
+                        current.style.display = '';
+                        document.getElementById('bankTransactionTable').style.display = "none";
+                        document.getElementById('firstBank').style.display = "none";
+                        document.getElementById('prevfirstBank').style.display = "none";
+                        document.getElementById('secondBank').style.display = "none";
+                        document.getElementById('prevsecondBank').style.display = "none";
+                        document.getElementById('thirdBank').style.display = "none";
+                        document.getElementById('prevthirdBank').style.display = "none";
+                        document.getElementById('fourthBank').style.display = "none";
+                        document.getElementById('prevfourthBank').style.display = "none";
+                    }
+                    else if (document.getElementsByClassName('accountType')[index].innerHTML == 'hybrid(savings+current)')
+                    {
+                        var current = document.getElementsByClassName('rowHighlight')[index];
+                        current.style.display = '';
+                        document.getElementById('bankTransactionTable').style.display = "none";
+                        document.getElementById('firstBank').style.display = "none";
+                        document.getElementById('prevfirstBank').style.display = "none";
+                        document.getElementById('secondBank').style.display = "none";
+                        document.getElementById('prevsecondBank').style.display = "none";
+                        document.getElementById('thirdBank').style.display = "none";
+                        document.getElementById('prevthirdBank').style.display = "none";
+                        document.getElementById('fourthBank').style.display = "none";
+                        document.getElementById('prevfourthBank').style.display = "none";
+                    }
+                    else if (document.getElementsByClassName('accountType')[index].innerHTML == 'fixed deposit')
+                    {
+                        var current = document.getElementsByClassName('rowHighlight')[index];
+                        current.style.display = '';
+                        document.getElementById('bankTransactionTable').style.display = "none";
+                        document.getElementById('firstBank').style.display = "none";
+                        document.getElementById('prevfirstBank').style.display = "none";
+                        document.getElementById('secondBank').style.display = "none";
+                        document.getElementById('prevsecondBank').style.display = "none";
+                        document.getElementById('thirdBank').style.display = "none";
+                        document.getElementById('prevthirdBank').style.display = "none";
+                        document.getElementById('fourthBank').style.display = "none";
+                        document.getElementById('prevfourthBank').style.display = "none";
+                    }
+                }
+            }
+        }
+
+        $( ".bankNum" ).click(function( event ) {
+            if (event.target.innerHTML == "010-4-444444")
+            {
+                document.getElementById('bankAccount').innerHTML = "DBS 010-4-444444";
+                document.getElementById('bankTransactionTable').style.display = '';
+                document.getElementById('transactionHistory').style.display = '';
+                document.getElementById('FixedDepositInformation').style.display = "none";
+                document.getElementById('firstBank').style.display = '';
+                document.getElementById('prevfirstBank').style.display = '';
+                for(var index = 0; index < document.getElementsByClassName('firstBankMonth').length;)
+                {
+                    document.getElementsByClassName('firstBankMonth')[index].style.display = '';
+                    index++;
+                }
+                document.getElementById('dbsSavingsPromo').style.display = '';
+                document.getElementById('secondBank').style.display = "none";
+                document.getElementById('prevsecondBank').style.display = "none";
+                for(var index2 = 0; index2 < document.getElementsByClassName('secondBankMonth').length;)
+                {
+                    document.getElementsByClassName('secondBankMonth')[index2].style.display = "none";
+                    index2++;
+                }
+                document.getElementById('thirdBank').style.display = "none";
+                document.getElementById('prevthirdBank').style.display = "none";
+                for(var index3 = 0; index3 < document.getElementsByClassName('thirdBankMonth').length;)
+                {
+                    document.getElementsByClassName('thirdBankMonth')[index3].style.display = "none";
+                    index3++;
+                }
+                document.getElementById('ocbcSavingsPromo').style.display = "none";
+                document.getElementById('fourthBank').style.display = "none";
+                document.getElementById('prevfourthBank').style.display = "none";
+                for(var index4 = 0; index4 < document.getElementsByClassName('fourthBankMonth').length;)
+                {
+                    document.getElementsByClassName('fourthBankMonth')[index4].style.display = "none";
+                    index4++;
+                }
+                document.getElementById('fifthBank').style.display = "none";
+                document.getElementById('sixthBank').style.display = "none";
+            }
+            else if (event.target.innerHTML == "010-1-111111")
+            {
+                document.getElementById('bankAccount').innerHTML = "DBS 010-1-111111";
+                document.getElementById('bankTransactionTable').style.display = '';
+                document.getElementById('transactionHistory').style.display = '';
+                document.getElementById('FixedDepositInformation').style.display = "none";
+                document.getElementById('firstBank').style.display = "none";
+                document.getElementById('prevfirstBank').style.display = "none";
+                for(var index5 = 0; index5 < document.getElementsByClassName('firstBankMonth').length;)
+                {
+                    document.getElementsByClassName('firstBankMonth')[index5].style.display = "none";
+                    index5++;
+                }
+                document.getElementById('dbsSavingsPromo').style.display = "none";
+                document.getElementById('secondBank').style.display = '';
+                document.getElementById('prevsecondBank').style.display = '';
+                for(var index6 = 0; index6 < document.getElementsByClassName('secondBankMonth').length;)
+                {
+                    document.getElementsByClassName('secondBankMonth')[index6].style.display = '';
+                    index6++;
+                }
+                document.getElementById('thirdBank').style.display = "none";
+                document.getElementById('prevthirdBank').style.display = "none";
+                for(var index7 = 0; index7 < document.getElementsByClassName('thirdBankMonth').length;)
+                {
+                    document.getElementsByClassName('thirdBankMonth')[index7].style.display = "none";
+                    index7++;
+                }
+                document.getElementById('ocbcSavingsPromo').style.display = "none";
+                document.getElementById('fourthBank').style.display = "none";
+                document.getElementById('prevfourthBank').style.display = "none";
+                for(var index8 = 0; index8 < document.getElementsByClassName('fourthBankMonth').length;)
+                {
+                    document.getElementsByClassName('fourthBankMonth')[index8].style.display = "none";
+                    index8++;
+                }
+                document.getElementById('fifthBank').style.display = "none";
+                document.getElementById('sixthBank').style.display = "none";
+            }
+            else if (event.target.innerHTML == "550-10-89550")
+            {
+                document.getElementById('bankAccount').innerHTML = "OCBC 550-10-89550";
+                document.getElementById('bankTransactionTable').style.display = '';
+                document.getElementById('transactionHistory').style.display = '';
+                document.getElementById('FixedDepositInformation').style.display = "none";
+                document.getElementById('firstBank').style.display = "none";
+                document.getElementById('prevfirstBank').style.display = "none";
+                for(var index9 = 0; index9 < document.getElementsByClassName('firstBankMonth').length;)
+                {
+                    document.getElementsByClassName('firstBankMonth')[index9].style.display = "none";
+                    index9++;
+                }
+                document.getElementById('dbsSavingsPromo').style.display = "none";
+                document.getElementById('secondBank').style.display = "none";
+                document.getElementById('prevsecondBank').style.display = "none";
+                for(var index10 = 0; index10 < document.getElementsByClassName('secondBankMonth').length;)
+                {
+                    document.getElementsByClassName('secondBankMonth')[index10].style.display = "none";
+                    index10++;
+                }
+                document.getElementById('thirdBank').style.display = '';
+                document.getElementById('prevthirdBank').style.display = '';
+                for(var index11 = 0; index11 < document.getElementsByClassName('thirdBankMonth').length;)
+                {
+                    document.getElementsByClassName('thirdBankMonth')[index11].style.display = '';
+                    index11++;
+                }
+                document.getElementById('ocbcSavingsPromo').style.display = '';
+                document.getElementById('fourthBank').style.display = "none";
+                document.getElementById('prevfourthBank').style.display = "none";
+                for(var index12 = 0; index12 < document.getElementsByClassName('fourthBankMonth').length;)
+                {
+                    document.getElementsByClassName('fourthBankMonth')[index12].style.display = "none";
+                    index12++;
+                }
+                document.getElementById('fifthBank').style.display = "none";
+                document.getElementById('sixthBank').style.display = "none";
+            }
+            else if (event.target.innerHTML == "910-20-31012")
+            {
+                document.getElementById('bankAccount').innerHTML = "UOB 910-20-31012";
+                document.getElementById('bankTransactionTable').style.display = '';
+                document.getElementById('transactionHistory').style.display = '';
+                document.getElementById('FixedDepositInformation').style.display = "none";
+                document.getElementById('firstBank').style.display = "none";
+                document.getElementById('prevfirstBank').style.display = "none";
+                for(var index13 = 0; index13 < document.getElementsByClassName('firstBankMonth').length;)
+                {
+                    document.getElementsByClassName('firstBankMonth')[index13].style.display = "none";
+                    index13++;
+                }
+                document.getElementById('dbsSavingsPromo').style.display = "none";
+                document.getElementById('secondBank').style.display = "none";
+                document.getElementById('prevsecondBank').style.display = "none";
+                for(var index14 = 0; index14 < document.getElementsByClassName('secondBankMonth').length;)
+                {
+                    document.getElementsByClassName('secondBankMonth')[index14].style.display = "none";
+                    index14++;
+                }
+                document.getElementById('thirdBank').style.display = "none";
+                document.getElementById('prevthirdBank').style.display = "none";
+                for(var index15 = 0; index15 < document.getElementsByClassName('thirdBankMonth').length;)
+                {
+                    document.getElementsByClassName('thirdBankMonth')[index15].style.display = "none";
+                    index15++;
+                }
+                document.getElementById('ocbcSavingsPromo').style.display = "none";
+                document.getElementById('fourthBank').style.display = '';
+                document.getElementById('prevfourthBank').style.display = '';
+                for(var index16 = 0; index16 < document.getElementsByClassName('fourthBankMonth').length;)
+                {
+                    document.getElementsByClassName('fourthBankMonth')[index16].style.display = '';
+                    index16++;
+                }
+                document.getElementById('fifthBank').style.display = "none";
+                document.getElementById('sixthBank').style.display = "none";
+            }
+            else if (event.target.innerHTML == "911-21-31013")
+            {
+                document.getElementById('bankAccount2').innerHTML = "UOB 911-21-31013";
+                document.getElementById('bankTransactionTable').style.display = '';
+                document.getElementById('transactionHistory').style.display = "none";
+                document.getElementById('FixedDepositInformation').style.display = '';
+                document.getElementById('firstBank').style.display = "none";
+                document.getElementById('prevfirstBank').style.display = "none";
+                for(var index17 = 0; index17 < document.getElementsByClassName('firstBankMonth').length;)
+                {
+                    document.getElementsByClassName('firstBankMonth')[index17].style.display = "none";
+                    index17++;
+                }
+                document.getElementById('dbsSavingsPromo').style.display = "none";
+                document.getElementById('secondBank').style.display = "none";
+                document.getElementById('prevsecondBank').style.display = "none";
+                for(var index18 = 0; index18 < document.getElementsByClassName('secondBankMonth').length;)
+                {
+                    document.getElementsByClassName('secondBankMonth')[index18].style.display = "none";
+                    index18++;
+                }
+                document.getElementById('thirdBank').style.display = "none";
+                document.getElementById('prevthirdBank').style.display = "none";
+                for(var index19 = 0; index15 < document.getElementsByClassName('thirdBankMonth').length;)
+                {
+                    document.getElementsByClassName('thirdBankMonth')[index19].style.display = "none";
+                    index19++;
+                }
+                document.getElementById('ocbcSavingsPromo').style.display = "none";
+                document.getElementById('fourthBank').style.display = 'none';
+                document.getElementById('prevfourthBank').style.display = 'none';
+                for(var index20 = 0; index20 < document.getElementsByClassName('fourthBankMonth').length;)
+                {
+                    document.getElementsByClassName('fourthBankMonth')[index20].style.display = 'none';
+                    index20++;
+                }
+                document.getElementById('fifthBank').style.display = '';
+                document.getElementById('sixthBank').style.display = "none";
+            }
+            else if (event.target.innerHTML == "550-10-89551")
+            {
+                document.getElementById('bankAccount2').innerHTML = "OCBC 550-10-89551";
+                document.getElementById('bankTransactionTable').style.display = '';
+                document.getElementById('transactionHistory').style.display = "none";
+                document.getElementById('FixedDepositInformation').style.display = '';
+                document.getElementById('firstBank').style.display = "none";
+                document.getElementById('prevfirstBank').style.display = "none";
+                for(var index21 = 0; index21 < document.getElementsByClassName('firstBankMonth').length;)
+                {
+                    document.getElementsByClassName('firstBankMonth')[index21].style.display = "none";
+                    index21++;
+                }
+                document.getElementById('dbsSavingsPromo').style.display = "none";
+                document.getElementById('secondBank').style.display = "none";
+                document.getElementById('prevsecondBank').style.display = "none";
+                for(var index22 = 0; index22 < document.getElementsByClassName('secondBankMonth').length;)
+                {
+                    document.getElementsByClassName('secondBankMonth')[index22].style.display = "none";
+                    index22++;
+                }
+                document.getElementById('thirdBank').style.display = "none";
+                document.getElementById('prevthirdBank').style.display = "none";
+                for(var index23 = 0; index23 < document.getElementsByClassName('thirdBankMonth').length;)
+                {
+                    document.getElementsByClassName('thirdBankMonth')[index23].style.display = "none";
+                    index23++;
+                }
+                document.getElementById('ocbcSavingsPromo').style.display = "none";
+                document.getElementById('fourthBank').style.display = 'none';
+                document.getElementById('prevfourthBank').style.display = 'none';
+                for(var index24 = 0; index24 < document.getElementsByClassName('fourthBankMonth').length;)
+                {
+                    document.getElementsByClassName('fourthBankMonth')[index24].style.display = 'none';
+                    index24++;
+                }
+                document.getElementById('fifthBank').style.display = "none";
+                document.getElementById('sixthBank').style.display = '';
+            }
+        });
+    </script>
+    {% endblock %}
+</html>

@@ -1,0 +1,297 @@
+
+<!DOCTYPE HTML>
+<html lang='en'>
+    <head>
+        <link rel='stylesheet' href='giro.css' />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <meta charset="utf-8" />
+        <title>giropage</title>
+        <style>
+            .fonth {
+                font-family:'Open Sans Condensed';
+            }
+            .rows {
+                padding:20px;
+                width:100px;
+            }
+            .tableh {
+                font-size:2em;
+                padding:20px;
+                color:white;
+                background-color:#2CBBBB;
+                font-family:'Open Sans Condensed';
+            }
+            .Container {
+                border:1px solid black;
+                border-radius:20px;
+                margin-top:50px;
+                margin-left:40px;
+                border-collapse:collapse;
+                font-family:cursive;
+                margin:auto;
+            }
+            .Container tr:nth-child(even) {
+                background-color:#F1F1F1;
+            }
+            .Container tr:nth-child(odd) {
+                background-color:#FEFEFE;
+            }
+            #lastcontent {
+                text-align:center;
+            }
+            #butt {
+                background-color:black;
+                color:white;
+                width:80px;
+                height:35px;
+                border-radius:10px;
+                cursor:pointer;
+            }
+            #close {
+                float:right;
+                cursor:pointer;
+                font-size:50px;
+            }
+            form {
+                border:1px solid black;
+                font-family:'Open Sans Condensed';
+                text-align:center;
+                display:none;
+                background-color:white;
+                color:black;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                height:720px;
+                width:500px;
+            }
+            #formhead {
+                text-align:center;
+                font-size:2.5em;
+                background-color:orange;
+                height:10%;
+            }
+            .ph {
+                box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                outline: none;
+                display: block;
+                width: 100%;
+                padding: 7px;
+                border: none;
+                border-bottom: 1px solid #ddd;
+                background: transparent;
+                margin-bottom: 10px;
+                font: 16px Arial, Helvetica, sans-serif;
+                height: 45px;
+            }
+            #submitbut {
+                -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+                -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+                box-shadow: inset 0px 1px 0px 0px #45D6D6;
+                background-color: #2CBBBB;
+                border: 1px solid #27A0A0;
+                display: inline-block;
+                cursor: pointer;
+                color: #FFFFFF;
+                font-family:'Open Sans Condensed', sans-serif;
+                font-size: 14px;
+                padding: 8px 18px;
+                text-decoration: none;
+                text-transform: uppercase;
+            }
+            .rows {
+                padding-right:20px;
+            }
+            /*.rows1{*/
+                /*pad*/
+            /*}*/
+            /*#showdetails {*/
+                /*display:none;*/
+            /*}*/
+        </style>
+    </head>
+
+    <body>{% extends 'layout.html' %}
+    {% block body %}
+    {% from "includes/_formhelper.html" import render_field %}
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                {% for error in field_errors %}
+                    <li>{{ form[field_name].label }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+        <div class='heading'>
+             <h1 class='fonth text-center'>Giro payment and transactions</h1>
+            <hr/>
+        </div>
+        <div>
+            <table id="tablegiro" class='Container' border='1'>
+
+                <tr>
+                    <th colspan='8' class='tableh'>Giro Transactions and payments
+                    </th>
+                </tr>
+
+                <tr class='rowt'>
+                    <td><span class='filter'>Filter by category:  </span>
+                        <select>
+                            <option value="all" />All</option>
+                            <option value="utility" />Utility</option>
+                            <option value="Bils" />Others</option>
+                            <option value="Standardtransfer" />Standard Transfer</option>
+                        </select>
+                    </td>
+
+                    <td><span class='filter'>Filter by bank account:  </span>
+                        <select>
+                            <option value="all" />All</option>
+                            <option value="dbs-s" />DBS-Savings</option>
+                            <option value="ocbc-s" />OCBC-Savings</option>
+                            <option value="uob-s" />UOB-Savings</option>
+                        </select>
+                    </td>
+                    <td><span class='filter'>Filter by Amount:  </span>
+                        <select>
+                            <option value="h-l" />Highest to lowest</option>
+                            <option value="l-h" />Lowest to Highest</option>
+                        </select>
+
+
+                </tr>
+                <tr >
+                    <td class='rows1'>Bank account number:
+                    </td>
+                    <td class='rows1'>Category:
+                    </td>
+                    <td class='rows1'>Specify:
+                    </td>
+                    <td class='rows1'>Amount:
+                    </td>
+                    <td class='rows1'>Account paying to:
+                    </td>
+                    <td class='rows1'>Date added:
+                    </td>
+                    <td class='rows1'>Total Amount:
+                    </td>
+                    <td class='rows1'>Details:
+                    </td>
+                {% for giro in newgiro %}
+                <tr class='rowt'>
+                    <td class='rows'>Bank account number:{{ giro.get_bankno()}}
+                    </td>
+                    <td class='rows'>Category:{{giro.get_category()}}
+                    </td>
+                    <td class='rows'>Specify:{{giro.get_specify()}}
+                    </td>
+                    <td class='rows'>Amount:{{giro.get_amount()}}
+                    </td>
+                    <td class='rows'>Account paying to:{{giro.get_payto()}}
+                    </td>
+                    <td class='rows'>Date added:{{giro.get_date()}}
+                    </td>
+                    <td class='rows'>Total Amount:{{giro.get_total()}}
+                    </td>
+                    <td class='rows'><a href="/update/{{ giro.get_bankno() }}${{ giro.get_specify() }}" class="btn btn-warning">Details</a>
+                    </td>
+
+                </tr>
+                {% endfor %}
+
+            </table>
+            <table border='1' id="showdetails">
+                <tr>
+                    <th>BankNo:</th>
+                    <th>Amount paying</th>
+                    <th>Date added:</th>
+                    <th>Succesfull(Y/N)</th>
+                </tr>
+                <tr>
+                {% for details in girodetails %}
+                    {% for i in range(details.get_monthdiff()) %}
+                    <td>{{details.get_payto()}}</td>
+                    <td>{{details.get_amount()}}</td>
+                    <td>{{details.get_date()}}</td>
+                    <td>{{details.get_sucess()}}</td>
+                </tr>
+                    {% endfor %}
+                {% endfor %}
+            </table>
+        </div>
+        <div id='lastcontent'>
+            <hr/>
+             <h2 class='fonth'>Add more payments here!</h2>
+
+            <button id='butt' >Add Giro</button>
+        </div>
+        <div>
+            <form method='POST' action="/giro" id='addgiro'>
+                <legend id='formhead'>Add Giro Form</legend>
+                <br>
+                <!--<input id='fbn' class='ph' type="text" name="field1" placeholder="Enter bank account number here:" />-->
+                {{ render_field(form.bankno, class_="form-control")}}
+                <br>
+                <!--<input id='famt' class='ph' type="number" name="field2" placeholder="Enter Amount payable: " />-->
+                {{ render_field(form.amount, class_="form-control") }}
+                <br>
+                <!--<input id='fpt' class='ph' type="text" name="field3" placeholder="Enter bank account number (Pay to):" />-->
+                {{ render_field(form.payto, class_="form-control") }}
+                <br>
+                <!--<input id='fs' class='ph' type="text" name="field4" placeholder="Specify:" />-->
+                {{ render_field(form.specify, class_="form-control") }}
+                <br>
+                <!--<select class='ph' id='fo'>-->
+                    <!--<option value="all" />All</option>-->
+                    <!--<option value="utility" />Utility</option>-->
+                    <!--<option value="Bils" />Others</option>-->
+                    <!--<option value="Standardtransfer" />Standard Transfer</option>-->
+                <!--</select>-->
+                {{ render_field(form.category, class_="form-control") }}
+                <br>
+                <input id='submitbut' type="submit" value="Add Giro Transfer" />
+                <br>
+                 <span id="close">&times;</span>
+            </form>
+        </div>
+
+        <script>
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "250px";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+            }
+
+            var openform = document.getElementById("addgiro");
+            var addbutton = document.getElementById("butt");
+            var closebuton = document.getElementById("close");
+            var displaydetails = document.getElementById('showdetails');
+            addbutton.onclick = function() {
+                openform.style.display = 'block';
+            }
+            closebuton.onclick = function() {
+                openform.style.display = 'none';
+            }
+
+
+
+
+        </script>
+    {% endblock %}
+
+
+    </body>
+
+</html>
