@@ -47,7 +47,7 @@
     background-color: plum;
     color: white;
 }
-
+table td {font-size:20px;}
 </style>
 
 </head>
@@ -124,8 +124,8 @@
 
 
 <!-- p is bank,q is month-->
-        <tr><td colspan="4">Total Deposit</td><td>${{totalforfilterdeposit}}</td></tr>
-        <tr><td colspan="4">Total Withdraw:</td><td>${{totalforfilterwithdraw}}</td></tr>
+        <tr><td colspan="4" style="font-weight:bold;font-size: 22px;">Total Deposit</td><td style="font-weight:bold;font-size: 22px;">${{totalforfilterdeposit}}</td></tr>
+        <tr><td colspan="4" style="font-weight:bold;font-size: 22px;">Total Withdraw:</td><td style="font-weight:bold;font-size: 22px;">${{totalforfilterwithdraw}}</td></tr>
 
 
         {% else %}
@@ -151,8 +151,8 @@
         {% endif %}
         {% endfor %}
 
-             <tr><td colspan="4">Total Deposit</td><td>${{totaldeposit}}</td></tr>
-            <tr><td colspan="4">Total Withdraw:</td><td>${{totalwithdraw}}</td></tr>
+             <tr><td colspan="4" style="font-weight:bold;font-size: 22px;">Total Deposit</td><td style="font-weight:bold;font-size: 22px;">${{totaldeposit}}</td></tr>
+            <tr><td colspan="4" style="font-weight:bold;font-size: 22px;">Total Withdraw:</td><td style="font-weight:bold;font-size: 22px;">${{totalwithdraw}}</td></tr>
 
         {% endif %}
 

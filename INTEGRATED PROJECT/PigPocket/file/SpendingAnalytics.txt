@@ -9,4 +9,3 @@ Steven,Feb 2018,Deposit,1007.89
 Steven,Feb 2018,Withdraw,80.00
 Steven,Feb 2018,Withdraw,109.87
 Kelly,Feb 2018,Withdraw,130.23
-

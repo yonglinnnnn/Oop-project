@@ -94,6 +94,9 @@ div #border {
     text-align: center;
 }
 
+#bankbank td{font-size:20px;}
+
+#bankbank th{font-size: 18px;}
 
     </style>
 </head>
@@ -115,16 +118,14 @@ div #border {
 
     <h1 style="text-align:center;font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace;font-weight: bold;">Fund Transfer</h1>
 
-<table style="margin:auto;width:70%;border-color: hotpink" border="1">
+<table style="margin:auto;width:70%;border-color: hotpink" border="1" id="bankbank">
         <tr><th style="background-color: pink;" colspan="4">{{session["userid"]}}'s Available account to transfer:</th></tr>
-    <tr><th>Bank account</th><th>Account type</th><th>Account Number</th><th>Account Balance</th></tr>
+    <tr><th>Bank account</th><th>Account Balance</th></tr>
         {% for i in detailsList %}
         {% if i.get_accountType()!="fixed deposit" %}
 
         <tr>
-            <td>{{i.get_bankBranch()}}</td>
-            <td> {{i.get_accountType().capitalize() }}</td>
-            <td> {{i.get_bankNum()}}:</td>
+            <td>{{i.get_bankBranch()}} {{i.get_accountType().capitalize() }} {{i.get_bankNum()}}:</td>
             <td>${{"%.2f" %i.get_accountBal()|float}}</td>
         </tr>
         {% endif %}
@@ -164,8 +165,8 @@ div #border {
                 {% endif %}
             </tr>
             {% endfor %}
-            <tr><td colspan="4" style="font-weight: bold">Total Deposit</td><td id="totaldeposit">${{"%.2f"%totald |float}}</td></tr>
-            <tr><td colspan="4" style="font-weight: bold">Total Withdraw:</td><td id="totalwithdraw">${{"%.2f"%totalw|float}}</td></tr>
+            <tr><td colspan="4" style="font-weight: bold" id="oo">Total Deposit</td><td  id="totaldeposit">${{"%.2f"%totald |float}}</td></tr>
+            <tr ><td colspan="4" style="font-weight: bold" id="kk">Total Withdraw:</td><td id="totalwithdraw">${{"%.2f"%totalw|float}}</td></tr>
             {% endif %}
 
     </table>
@@ -269,15 +270,27 @@ div #border {
         if (filter==x){
             var x=document.getElementById("totalwithdraw").innerText="$"+{{"%.2f"%totalprevwithdraw|float}}
             var y=document.getElementById("totaldeposit").innerText="$"+{{"%.2f"%totalprevdeposit|float}}
+            var a=document.getElementById("oo").innerText="Total Deposit: "
+            var b=document.getElementById("kk").innerText="Total Withdraw: "
         }
         else if (filter==n){
-            var x=document.getElementById("totaldeposit").innerText="$" +{{"%.2f"%totalmonthdeposit|float}}
+            var x=document.getElementById("totaldeposit").innerText="$"+{{"%.2f"%totalmonthdeposit|float}}
             var y=document.getElementById("totalwithdraw").innerText="$" +{{"%.2f"%totalmonthwithdraw|float}}
+            var a=document.getElementById("oo").innerText="Total Deposit: "
+            var b=document.getElementById("kk").innerText="Total Withdraw: "
           }
+        else if (filter=="") {
+            var x=document.getElementById("totaldeposit").innerText="$"+{{"%.2f"%totald|float}}
+            var y=document.getElementById("totalwithdraw").innerText="$" +{{"%.2f"%totalw|float}}
+            var a=document.getElementById("oo").innerText="Total Deposit: "
+            var b=document.getElementById("kk").innerText="Total Withdraw: "
+        }
 
         else {
-            var x=document.getElementById("totalwithdraw").innerText="$"+{{"%.2f"%totalw|float}}
-            var y=document.getElementById("totaldeposit").innerText="$"+ {{"%.2f"%totald|float}}
+            var x=document.getElementById("totalwithdraw").innerText=""
+            var y=document.getElementById("totaldeposit").innerText=""
+            var z=document.getElementById("oo").innerText=""
+            var a = document.getElementById("kk").innerText=""
         }
         if (td1) {
           if (td1.innerHTML.toUpperCase().indexOf(filter) > -1||td2.innerHTML.toUpperCase().indexOf(filter) > -1||td3.innerHTML.toUpperCase().indexOf(filter) > -1
