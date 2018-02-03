@@ -12,4 +12,3 @@ Kelly,1 Feb 2018,UOB hybrid(savings+current) 910-20-31012,Mom,None,130.23,Feb,20
 Steven,2 Feb 2018,Dbs 010-1-111111,Withdraw,None,100.00,Feb,2018
 Kelly,2 Feb 2018,UOB hybrid(savings+current) 910-20-31012,Deposit,50.00,None,Feb,2018
 Steven,2 Feb 2018,Dbs 010-4-444444,Withdraw,None,50.00,Feb,2018
-

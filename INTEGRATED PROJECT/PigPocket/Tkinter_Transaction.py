@@ -12,12 +12,11 @@ for accounts in RetrievingProcess.processUserDetails(user.capitalize()):
 
 months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
-dayNow = datetime.date.today().strftime("%d")
+dayNow = datetime.date.today().day
 monthNow = datetime.datetime.now().month - 1
 yearNow = datetime.date.today().strftime("%Y")
 
-
-class StevenTransaction:
+class ATMTransaction:
     def __init__(self):
         self.main_window = tk.Tk()
         self.main_window.title("ATM stimulation")
@@ -47,91 +46,109 @@ class StevenTransaction:
         self.__totalDeposit = totalDeposit
 
     def display(self):
+        TemporaryList = []
         account = self.text1.get()
-        try:
-            user_file = open('file/' + user.capitalize(), 'w')
-            for accounts in accountList:
-                if account == accounts.get_bankNum():
-                    print(accounts.get_bankNum())
-                    print(accounts.get_accountBal())
-                    tkinter.messagebox.showinfo('Response', 'You have selected bank account {}'.format(account))
-                    while True:
-                        transaction = tkinter.simpledialog.askstring("Response", "Do you wish to withdraw or deposit? ")
-                        if transaction.lower() == "withdraw":
-                            while True:
-                                amount = tkinter.simpledialog.askstring("Response", "Withdraw amount? ")
-                                try:
-                                    amount = float(amount)
-                                except ValueError:
-                                    print('Error converting')
-                                except TypeError:
-                                    print('TypeError')
-                                except:
-                                    print('Unknown error')
-                                else:
-                                    if amount > 0:
-                                        balance = float(accounts.get_accountBal())
-                                        balance -= amount
-                                        accounts.set_accountBal(balance)
-                                        print(accounts.get_accountBal())
-                                        tkinter.messagebox.showinfo('Response', '${} withdrawn.'.format(amount))
-                                        try:
-                                            bankTransFile = open("file/" + str(accounts.get_bankNum()), 'a')
-                                            bankTransFile.writelines("%s,%s,%s,%s,%s,%.2f,%s,%s" %(user.capitalize(), (str(dayNow) + " " + months[monthNow] + " " + str(yearNow)), (accounts.get_bankBranch() + " " + accounts.get_bankNum()), transaction.capitalize(), "None", amount, months[monthNow], str(yearNow)+"\n"))
-                                            bankTransFile.close()
-                                            AllTrans=open("file/AllTransaction.txt","a")
-                                            AllTrans.writelines("%s,%s,%s,%s,%s,%.2f,%s,%s" %(user.capitalize(), (str(dayNow) + " " + months[monthNow] + " " + str(yearNow)), (accounts.get_bankBranch() + " " + accounts.get_bankNum()), transaction.capitalize(), "None", amount, months[monthNow], str(yearNow)+"\n"))
-                                            AllTrans.close()
-                                        except IOError:
-                                            print("File not found")
-                                        except:
-                                            print("Unknown error")
+        for accounts in accountList:
+            if account == accounts.get_bankNum() and accounts.get_accountType().lower() == "fixed deposit":
+                tkinter.messagebox.showinfo("Response", "bank account {} is a fixed deposit account. Can't perform transactions.".format(account))
+            elif account == accounts.get_bankNum() and accounts.get_accountType().lower() != "fixed deposit":
+                print(accounts.get_bankNum())
+                print(accounts.get_accountBal())
+                tkinter.messagebox.showinfo('Response', 'You have selected bank account {}'.format(account))
+                while True:
+                    transaction = tkinter.simpledialog.askstring("Response", "Do you wish to withdraw or deposit? ")
+                    if transaction.lower() == "withdraw":
+                        while True:
+                            amount = tkinter.simpledialog.askstring("Response", "Withdraw amount? ")
+                            try:
+                                amount = float(amount)
+                            except ValueError:
+                                print('Error converting')
+                            except TypeError:
+                                print('TypeError')
+                            except:
+                                print('Unknown error')
+                            else:
+                                if amount > 0 and amount <= float(accounts.get_accountBal()):
+                                    balance = float(accounts.get_accountBal())
+                                    balance -= amount
+                                    accounts.set_accountBal(balance)
+                                    print(accounts.get_accountBal())
+                                    tkinter.messagebox.showinfo('Response', '${} withdrawn.'.format(amount))
+                                    try:
+                                        bankTransFile = open("file/" + str(accounts.get_bankNum()), 'a')
+                                        bankTransFile.writelines("%s,%s,%s,%s,%s,%.2f,%s,%s\n" %(user.capitalize(), (str(dayNow) + " " + months[monthNow] + " " + str(yearNow)), (accounts.get_bankBranch() + " " + accounts.get_accountType() +  " " +  accounts.get_bankNum()), transaction.capitalize(), "None", amount, months[monthNow], str(yearNow)))
+                                        bankTransFile.close()
+                                        AllTrans = open("file/AllTransaction.txt", "a")
+                                        AllTrans.writelines("%s,%s,%s,%s,%s,%.2f,%s,%s\n" % (user.capitalize(), (str(dayNow) + " " + months[monthNow] + " " + str(yearNow)),(accounts.get_bankBranch() + " " + accounts.get_bankNum()),transaction.capitalize(), "None", amount, months[monthNow],str(yearNow)))
+                                        AllTrans.close()
+                                    except IOError:
+                                        print("File not found")
+                                    except:
+                                        print("Unknown error")
                                         break
-                                    else:
-                                        tkinter.messagebox.showinfo('Response', 'Invalid Amount. Please re-enter amount.')
-                            break
-                        elif transaction.lower() == "deposit":
-                            while True:
-                                amount = tkinter.simpledialog.askstring("Response", "Deposit amount? ")
-                                try:
-                                    amount = float(amount)
-                                except ValueError:
-                                    print('Error converting')
-                                except TypeError:
-                                    print('TypeError')
-                                except:
-                                    print('Unknown error')
+                                elif amount == '':
+                                    break
                                 else:
-                                    if amount > 0:
-                                        balance = float(accounts.get_accountBal())
-                                        balance += amount
-                                        accounts.set_accountBal(balance)
-                                        print(accounts.get_accountBal())
-                                        tkinter.messagebox.showinfo('Response', '${} deposited.'.format(amount))
-                                        try:
-                                            bankTransFile = open("file/" + str(accounts.get_bankNum()), 'a')
-                                            bankTransFile.writelines("%s,%s,%s,%s,%.2f,%s, %s, %s" % (user.capitalize(), (str(dayNow) + " " + months[monthNow] + " " + str(yearNow)),(accounts.get_bankBranch() + " " + accounts.get_bankNum()),transaction.capitalize(), amount, "None", months[monthNow], str(yearNow)+"\n"))
-                                            bankTransFile.close()
-                                            AllTrans=open("file/AllTransaction.txt","a")
-                                            AllTrans.writelines("%s,%s,%s,%s,%.2f,%s, %s, %s" % (user.capitalize(),(str(dayNow) + " " + months[monthNow] + " " + str(yearNow)),(accounts.get_bankBranch() + " " + accounts.get_bankNum()),transaction.capitalize(), amount, "None", months[monthNow], str(yearNow)+"\n"))
-                                            AllTrans.close()
-                                        except IOError:
-                                            print("File not found")
-                                        except:
-                                            print("Unknown error")
-                                        break
-                                    else:
-                                        tkinter.messagebox.showinfo('Response', 'Invalid Amount. Please re-enter amount.')
+                                    tkinter.messagebox.showinfo('Response', 'Invalid Amount. Please re-enter amount.')
                             break
-                        else:
-                            tkinter.messagebox.showinfo('Response', 'Invalid transaction command.')
-                accountDetails = accounts.get_bankBranch() + "," + accounts.get_bankNum() + "," + accounts.get_accountType() + "," + str(accounts.get_interestRate()) + "," + str(accounts.get_originalaccountBal()) + "," + str(accounts.get_accountBal()) + "\n"
-                user_file.write(accountDetails)
-            user_file.close()
-        except IOError:
-            print("File not found")
-        except:
-            print("Unknown error")
+                        break
+                    elif transaction.lower() == "deposit":
+                        while True:
+                            amount = tkinter.simpledialog.askstring("Response", "Deposit amount? ")
+                            try:
+                                amount = float(amount)
+                            except ValueError:
+                                print('Error converting')
+                            except TypeError:
+                                print('TypeError')
+                            except:
+                                print('Unknown error')
+                            else:
+                                if amount > 0:
+                                    balance = float(accounts.get_accountBal())
+                                    balance += amount
+                                    accounts.set_accountBal(balance)
+                                    print(accounts.get_accountBal())
+                                    tkinter.messagebox.showinfo('Response', '${} deposited.'.format(amount))
+                                    try:
+                                        bankTransFile = open("file/" + str(accounts.get_bankNum()), 'a')
+                                        bankTransFile.writelines("%s,%s,%s,%s,%.2f,%s,%s,%s\n" % (user.capitalize(), (str(dayNow) + " " + months[monthNow] + " " + str(yearNow)),(accounts.get_bankBranch() + " " + accounts.get_accountType() + " " + accounts.get_bankNum()),transaction.capitalize(), amount, "none", months[monthNow], str(yearNow)))
+                                        bankTransFile.close()
+                                        AllTrans = open("file/AllTransaction.txt", "a")
+                                        AllTrans.writelines("%s,%s,%s,%s,%.2f,%s, %s, %s\n" % (user.capitalize(), (str(dayNow) + " " + months[monthNow] + " " + str(yearNow)),(accounts.get_bankBranch() + " " + accounts.get_bankNum()),transaction.capitalize(), amount, "None", months[monthNow],str(yearNow)))
+                                        AllTrans.close()
+                                    except IOError:
+                                        print("File not found")
+                                        break
+                                    except:
+                                        print("Unknown error")
+                                        break
+                                elif amount == '':
+                                    break
+                                else:
+                                    tkinter.messagebox.showinfo('Response', 'Invalid Amount. Please re-enter amount.')
+                            break
+                        break
+                    else:
+                        tkinter.messagebox.showinfo('Response', 'Invalid transaction command.')
 
-StevenTransaction()
+            if accounts.get_accountType() != "fixed deposit":
+                accountDetails = "%s,%s,%s,%.2f,%.2f,%.2f\n" %(accounts.get_bankBranch(),accounts.get_bankNum(),accounts.get_accountType(),float(accounts.get_interestRate()),float(accounts.get_originalaccountBal()),float(accounts.get_accountBal()))
+                TemporaryList.append(accountDetails)
+            else:
+                accountDetails = accounts.get_bankBranch() + "," + accounts.get_bankNum() + "," + accounts.get_accountType() + "," + str(accounts.get_interestRate()) + "," + str(accounts.get_principalAmount()) + "," + str(accounts.get_totalAmount()) +  "," + accounts.get_duration() + "," + accounts.get_startDate() + "," + accounts.get_endDate() + "," + accounts.get_checkMature() + "," + "\n"
+                TemporaryList.append(accountDetails)
 
+
+            try:
+                user_file = open('file/' + user.capitalize(), 'w')
+                for accountDetails in TemporaryList:
+                    user_file.write(accountDetails)
+                user_file.close()
+            except IOError:
+                print("File not found")
+            except:
+                print("Unknown error")
+
+ATMTransaction()

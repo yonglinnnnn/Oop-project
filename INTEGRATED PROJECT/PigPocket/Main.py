@@ -797,8 +797,25 @@ def transaction():
         prevvmonth = "Feb"
     elif prevvmonth == 3:
         prevvmonth = "Mar"
-    elif prevvmonth == 3:
+    elif prevvmonth == 4:
         prevvmonth = "Apr"
+    elif prevvmonth==5:
+        prevvmonth="May"
+    elif prevvmonth==6:
+        prevvmonth="June"
+    elif prevvmonth==7:
+        prevvmonth="July"
+    elif prevvmonth==8:
+        prevvmonth="Aug"
+    elif prevvmonth==9:
+        prevvmonth="Sep"
+    elif prevvmonth==10:
+        prevvmonth="Oct"
+    elif prevvmonth==11:
+        prevvmonth="Nov"
+    else:
+        prevvmonth="Dec"
+
     justmonth = now.month
     if justmonth == 1:
         justmonth = "Jan"
@@ -806,8 +823,24 @@ def transaction():
         justmonth = "Feb"
     elif justmonth == 3:
         justmonth = "Mar"
-    elif justmonth == 3:
+    elif justmonth == 4:
         justmonth = "Apr"
+    elif justmonth==5:
+        justmonth="May"
+    elif justmonth==6:
+        justmonth="June"
+    elif justmonth==7:
+        justmonth="July"
+    elif justmonth==8:
+        justmonth="Aug"
+    elif justmonth==9:
+        justmonth="Sep"
+    elif justmonth==10:
+        justmonth="Oct"
+    elif justmonth==11:
+        justmonth="Nov"
+    else:
+        justmonth="Dec"
 
     if request.method == 'POST' and form.validate():
         hello=MainProcess.filter(session['userid'],form.bank.data,form.month.data)
@@ -824,9 +857,128 @@ def transaction():
     totalprevwithdraw = MainProcess.spendings(session["userid"], prevmonth)
     totaldeposit = MainProcess.deposits(session["userid"], month)
     totalwithdraw = MainProcess.spendings(session["userid"], month)
-    print(p)
-    print(q)
-    return render_template("transaction.html",prevvmonth=prevvmonth,justmonth=justmonth,another=plist,p=p,q=q,Transaction=hello,totalprevdeposit=totalprevdeposit,totalprevwithdraw=totalprevwithdraw,totaldeposit=totaldeposit,totalwithdraw=totalwithdraw,month=month,prevmonth=prevmonth,form=form)
+    totalforfilterdeposit=MainProcess.totalforfilterdeposit(session["userid"],form.month.data,form.bank.data)
+    totalforfilterwithdraw=MainProcess.totalforfilterwithdraw(session['userid'],form.month.data,form.bank.data)
+    return render_template("transaction.html",totalforfilterwithdraw=totalforfilterwithdraw,totalforfilterdeposit=totalforfilterdeposit,prevvmonth=prevvmonth,justmonth=justmonth,another=plist,p=p,q=q,Transaction=hello,totalprevdeposit=totalprevdeposit,totalprevwithdraw=totalprevwithdraw,totaldeposit=totaldeposit,totalwithdraw=totalwithdraw,month=month,prevmonth=prevmonth,form=form)
+
+@app.route("/prevtransaction",methods=['GET',"POST"])
+def prevtransaction():
+    class newTransaction(Form):
+        month=SelectField('Month', [validators.DataRequired()],choices=[('', 'Select'), ("Jan", "January 2018"),("Feb","February 2018"),("Mar","March 2018"),("Apr","April 2018"),("May","May 2018"),("June","June 2018"),("July","July 2018"),("Aug","August 2018"),("Sep","September 2018"),("Oct","October 2018"),("Nov","November 2018"),("Dec","December 2018")], default='')
+        userlist = []
+        user_file = open("file/" + session['userid'].capitalize(), 'r')
+        for ulist in user_file:
+            list = ulist.split(',')
+            s = list[0]
+            if s not in userlist:
+                userlist.append(s)
+        if len(userlist)== 0:
+            bank = SelectField('Bank', [validators.DataRequired()],choices=[('null', 'Select'), ("No account", "No account")], default='')
+        elif len(userlist)== 1:
+            bank = SelectField('Bank', [validators.DataRequired()],choices=[('null', 'Select'),("All","All"),(userlist[0].lower(), userlist[0])], default='')
+        elif len(userlist)== 2:
+            bank = SelectField('Bank', [validators.DataRequired()],choices=[('null', 'Select'),("All","All"), (userlist[0].lower(), userlist[0]),(userlist[1].lower(),userlist[1])], default='')
+        elif len(userlist)==3:
+            bank = SelectField('Bank', [validators.DataRequired()],choices=[('null', 'Select'),("All","All"), (userlist[0].lower(), userlist[0]),(userlist[1].lower(),userlist[1]),(userlist[2].lower(),userlist[2])], default='')
+        elif len(userlist)==4:
+            bank = SelectField('Bank', [validators.DataRequired()],choices=[('null', 'Select'),("All","All"),(userlist[0].lower(), userlist[0]),(userlist[1].lower(),userlist[1]),(userlist[2].lower(),userlist[2]),(userlist[3].lower(),userlist[3])], default='')
+    form = newTransaction(request.form)
+    prev = datetime.datetime.now()
+    prevmonth = prev.month - 1
+    if prevmonth == 0:
+        prevmonth = "Dec" + " " + str(prev.year - 1)
+    elif prevmonth == 1:
+        prevmonth = "Jan " + str(prev.year)
+    elif prevmonth == 2:
+        prevmonth = "Feb " + str(prev.year)
+    elif prevmonth == 3:
+        prevmonth = "Mar " + str(prev.year)
+    elif prevmonth == 4:
+        prevmonth = "Apr " + str(prev.year)
+    elif prevmonth == 5:
+        prevmonth = "May " + str(prev.year)
+    now = datetime.datetime.now()
+    month = now.month
+    if month == 1:
+        month = "Jan " + str(now.year)
+    elif month == 2:
+        month = "Feb " + str(now.year)
+    elif month == 3:
+        month = "Mar " + str(now.year)
+    elif month == 4:
+        month = "Apr " + str(now.year)
+    elif month == 5:
+        month = "May " + str(now.year)
+    prevvmonth = now.month-1
+    if prevvmonth == 1:
+        prevvmonth = "Jan"
+    elif prevvmonth == 2:
+        prevvmonth = "Feb"
+    elif prevvmonth == 3:
+        prevvmonth = "Mar"
+    elif prevvmonth == 4:
+        prevvmonth = "Apr"
+    elif prevvmonth==5:
+        prevvmonth="May"
+    elif prevvmonth==6:
+        prevvmonth="June"
+    elif prevvmonth==7:
+        prevvmonth="July"
+    elif prevvmonth==8:
+        prevvmonth="Aug"
+    elif prevvmonth==9:
+        prevvmonth="Sep"
+    elif prevvmonth==10:
+        prevvmonth="Oct"
+    elif prevvmonth==11:
+        prevvmonth="Nov"
+    else:
+        prevvmonth="Dec"
+
+    justmonth = now.month
+    if justmonth == 1:
+        justmonth = "Jan"
+    elif justmonth == 2:
+        justmonth = "Feb"
+    elif justmonth == 3:
+        justmonth = "Mar"
+    elif justmonth == 4:
+        justmonth = "Apr"
+    elif justmonth==5:
+        justmonth="May"
+    elif justmonth==6:
+        justmonth="June"
+    elif justmonth==7:
+        justmonth="July"
+    elif justmonth==8:
+        justmonth="Aug"
+    elif justmonth==9:
+        justmonth="Sep"
+    elif justmonth==10:
+        justmonth="Oct"
+    elif justmonth==11:
+        justmonth="Nov"
+    else:
+        justmonth="Dec"
+
+    if request.method == 'POST' and form.validate():
+        hello=MainProcess.filter(session['userid'],form.bank.data,form.month.data)
+
+    p = form.bank.data
+    q = form.month.data
+    if p=="":
+        p="hi"
+    if q=="":
+        q="hi"
+    hello = MainProcess.filter(session['userid'], form.bank.data, form.month.data)
+    plist = MainProcess.spendinganalyticstransaction(session["userid"])
+    totalprevdeposit = MainProcess.deposits(session["userid"], prevmonth)
+    totalprevwithdraw = MainProcess.spendings(session["userid"], prevmonth)
+    totaldeposit = MainProcess.deposits(session["userid"], month)
+    totalwithdraw = MainProcess.spendings(session["userid"], month)
+    totalforfilterdeposit=MainProcess.totalforfilterdeposit(session["userid"],form.month.data,form.bank.data)
+    totalforfilterwithdraw=MainProcess.totalforfilterwithdraw(session['userid'],form.month.data,form.bank.data)
+    return render_template("prevtransaction.html",totalforfilterwithdraw=totalforfilterwithdraw,totalforfilterdeposit=totalforfilterdeposit,prevvmonth=prevvmonth,justmonth=justmonth,another=plist,p=p,q=q,Transaction=hello,totalprevdeposit=totalprevdeposit,totalprevwithdraw=totalprevwithdraw,totaldeposit=totaldeposit,totalwithdraw=totalwithdraw,month=month,prevmonth=prevmonth,form=form)
 
 class qtypoints(Form):
 

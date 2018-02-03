@@ -92,7 +92,7 @@
     <div id="cool">
     <table border="1" style="border-collapse:collapse;margin:auto;width:80%;">
 {% if p=="hi" and q=="hi" %}
-        <thead><span style="font-size: 20px;">Transaction for {{month}}:</span></thead>
+        <thead><span style="font-size: 20px;">Transaction for {{prevmonth}}:</span></thead>
 {% else %}
         <thead><span style="font-size: 20px;">Transaction for {{q}} 2018:</span></thead>
         {%endif%}
@@ -130,7 +130,7 @@
 
         {% else %}
         {% for Trans in another %}
-        {% if Trans.get_date().endswith(month) %}
+        {% if Trans.get_date().endswith(prevmonth) %}
 
         <tr>
                 <td>{{ Trans.get_date() }}</td>
@@ -151,8 +151,8 @@
         {% endif %}
         {% endfor %}
 
-             <tr><td colspan="4">Total Deposit</td><td>${{totaldeposit}}</td></tr>
-            <tr><td colspan="4">Total Withdraw:</td><td>${{totalwithdraw}}</td></tr>
+             <tr><td colspan="4">Total Deposit</td><td>${{totalprevdeposit}}</td></tr>
+            <tr><td colspan="4">Total Withdraw:</td><td>${{totalprevwithdraw}}</td></tr>
 
         {% endif %}
 

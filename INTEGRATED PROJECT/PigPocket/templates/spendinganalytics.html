@@ -34,7 +34,11 @@
     background-color:#FAE9E4;
     text-align: center;
 }
-    ul li {list-style-position: inside;}
+    ul li {list-style-position: inside;font-size:20px;}
+
+    ol li {font-size: 18px;}
+
+
     </style>
 </head>
 <body>
@@ -59,8 +63,8 @@
   <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 <div id="borders">
-    <h2>This month deposit: ${{totaldeposit}} <br>
-        This month withdraw: ${{totalwithdraw}}
+    <h2>{{month}} Deposit: ${{"%.2f"%totaldeposit|float}} <br>
+        {{month}} Withdraw: ${{"%.2f"%totalwithdraw|float}}
     </h2>
     {% if totaldeposit < totalwithdraw %}
     <ul>
@@ -85,7 +89,6 @@
     <ol style="text-align: center;list-style-position: inside;font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace">
     <li style="color:green">Save more by limiting yourself to a specific sum of money</li>
     <li style="color:purple;">Look out for discount that will let you save even more</li>
-    <li style="color:blue;">Know when to stop when you shop</li>
     </ol>
 
     {% else %}
@@ -144,9 +147,9 @@ function drawChart() {
     if (selection.length) {
         var pieSliceLabel = data.getValue(selection[0].row, 0);
            if (pieSliceLabel=="Deposit"){
-            window.location.href ="/transaction";}
+            window.location.href ="/prevtransaction";}
         else if (pieSliceLabel=="Withdraw"){
-            window.location.href="/transaction"}
+            window.location.href="/prevtransaction"}
     }
 }
 }

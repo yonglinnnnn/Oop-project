@@ -640,3 +640,42 @@ def c_balance(firstname,type):
 
     total = "%.2f" % total
     return total
+
+
+def totalforfilterdeposit(name,month,bank):
+    total=0
+    user_file=open("file/AllTransaction.txt","r")
+    for a in user_file:
+        user = a.split(",")
+        if user[0] == name and user[2].lower().startswith(bank) and user[6]==month :
+            if user[4].lower()=="none":
+                pass
+            else:
+                total+=float(user[4])
+        elif user[0]==name and bank=="All" and user[6]==month:
+            if user[4].lower()=="none":
+                pass
+            else:
+                total+=float(user[4])
+    total="%0.2f"%total
+    return total
+
+def totalforfilterwithdraw(name,month,bank):
+    total=0
+    user_file = open("file/AllTransaction.txt", "r")
+    for a in user_file:
+        user = a.split(",")
+        if user[0] == name and user[2].lower().startswith(bank) and user[6] == month:
+            if user[5].lower() == "none":
+                pass
+            else:
+                total += float(user[5])
+        elif user[0]==name and bank=="All" and user[6]==month:
+            if user[5].lower()=="none":
+                pass
+            else:
+                total+=float(user[5])
+    total = "%0.2f" % total
+    return total
+
+

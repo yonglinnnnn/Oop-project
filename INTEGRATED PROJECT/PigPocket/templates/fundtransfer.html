@@ -123,7 +123,7 @@ div #border {
 
         <tr>
             <td>{{i.get_bankBranch()}}</td>
-            <td> {{i.get_accountType()}}</td>
+            <td> {{i.get_accountType().capitalize() }}</td>
             <td> {{i.get_bankNum()}}:</td>
             <td>${{"%.2f" %i.get_accountBal()|float}}</td>
         </tr>
@@ -267,17 +267,17 @@ div #border {
           var x=month[y.getMonth()-1];
 
         if (filter==x){
-            var x=document.getElementById("totalwithdraw").innerText="$"+{{totalprevwithdraw}}
-            var y=document.getElementById("totaldeposit").innerText="$"+{{totalprevdeposit}}
+            var x=document.getElementById("totalwithdraw").innerText="$"+{{"%.2f"%totalprevwithdraw|float}}
+            var y=document.getElementById("totaldeposit").innerText="$"+{{"%.2f"%totalprevdeposit|float}}
         }
         else if (filter==n){
-            var x=document.getElementById("totaldeposit").innerText="$" +{{totalmonthdeposit}}
-            var y=document.getElementById("totalwithdraw").innerText="$" +{{totalmonthwithdraw}}
+            var x=document.getElementById("totaldeposit").innerText="$" +{{"%.2f"%totalmonthdeposit|float}}
+            var y=document.getElementById("totalwithdraw").innerText="$" +{{"%.2f"%totalmonthwithdraw|float}}
           }
 
         else {
-            var x=document.getElementById("totalwithdraw").innerText="$"+{{totalw}}
-            var y=document.getElementById("totaldeposit").innerText="$"+ {{totald}}
+            var x=document.getElementById("totalwithdraw").innerText="$"+{{"%.2f"%totalw|float}}
+            var y=document.getElementById("totaldeposit").innerText="$"+ {{"%.2f"%totald|float}}
         }
         if (td1) {
           if (td1.innerHTML.toUpperCase().indexOf(filter) > -1||td2.innerHTML.toUpperCase().indexOf(filter) > -1||td3.innerHTML.toUpperCase().indexOf(filter) > -1
