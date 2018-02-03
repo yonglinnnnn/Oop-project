@@ -16,6 +16,7 @@ dayNow = datetime.date.today().strftime("%d")
 monthNow = datetime.datetime.now().month - 1
 yearNow = datetime.date.today().strftime("%Y")
 
+
 class StevenTransaction:
     def __init__(self):
         self.main_window = tk.Tk()
@@ -76,8 +77,11 @@ class StevenTransaction:
                                         tkinter.messagebox.showinfo('Response', '${} withdrawn.'.format(amount))
                                         try:
                                             bankTransFile = open("file/" + str(accounts.get_bankNum()), 'a')
-                                            bankTransFile.writelines("%s,%s,%s,%s,%s,%.2f,%s,%s" %(user.capitalize(), (str(dayNow) + " " + months[monthNow] + " " + str(yearNow)), (accounts.get_bankBranch() + " " + accounts.get_bankNum()), transaction.capitalize(), "none", amount, months[monthNow], str(yearNow)))
+                                            bankTransFile.writelines("%s,%s,%s,%s,%s,%.2f,%s,%s" %(user.capitalize(), (str(dayNow) + " " + months[monthNow] + " " + str(yearNow)), (accounts.get_bankBranch() + " " + accounts.get_bankNum()), transaction.capitalize(), "None", amount, months[monthNow], str(yearNow)+"\n"))
                                             bankTransFile.close()
+                                            AllTrans=open("file/AllTransaction.txt","a")
+                                            AllTrans.writelines("%s,%s,%s,%s,%s,%.2f,%s,%s" %(user.capitalize(), (str(dayNow) + " " + months[monthNow] + " " + str(yearNow)), (accounts.get_bankBranch() + " " + accounts.get_bankNum()), transaction.capitalize(), "None", amount, months[monthNow], str(yearNow)+"\n"))
+                                            AllTrans.close()
                                         except IOError:
                                             print("File not found")
                                         except:
@@ -106,8 +110,11 @@ class StevenTransaction:
                                         tkinter.messagebox.showinfo('Response', '${} deposited.'.format(amount))
                                         try:
                                             bankTransFile = open("file/" + str(accounts.get_bankNum()), 'a')
-                                            bankTransFile.writelines("%s,%s,%s,%s,%.2f,%s, %s, %s" % (user.capitalize(), (str(dayNow) + " " + months[monthNow] + " " + str(yearNow)),(accounts.get_bankBranch() + " " + accounts.get_bankNum()),transaction.capitalize(), amount, "none", months[monthNow], str(yearNow)))
+                                            bankTransFile.writelines("%s,%s,%s,%s,%.2f,%s, %s, %s" % (user.capitalize(), (str(dayNow) + " " + months[monthNow] + " " + str(yearNow)),(accounts.get_bankBranch() + " " + accounts.get_bankNum()),transaction.capitalize(), amount, "None", months[monthNow], str(yearNow)+"\n"))
                                             bankTransFile.close()
+                                            AllTrans=open("file/AllTransaction.txt","a")
+                                            AllTrans.writelines("%s,%s,%s,%s,%.2f,%s, %s, %s" % (user.capitalize(),(str(dayNow) + " " + months[monthNow] + " " + str(yearNow)),(accounts.get_bankBranch() + " " + accounts.get_bankNum()),transaction.capitalize(), amount, "None", months[monthNow], str(yearNow)+"\n"))
+                                            AllTrans.close()
                                         except IOError:
                                             print("File not found")
                                         except:

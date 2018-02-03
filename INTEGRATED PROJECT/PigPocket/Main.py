@@ -403,15 +403,21 @@ def accounts():
 def fundtransfer():
     class newTransaction(Form):
         transaction_details = StringField("Recipient's name:",[validators.Length(min=1, max=150), validators.DataRequired()])
-        userlist = []
-        user_file = open("file/" + session['userid'].capitalize() , 'r')
-        for ulist in user_file:
-            list = ulist.split(',')
-            if list[2]=="fixed deposit":
-                pass
-            else:
-                s =list[0] + " " + list[2] + " " + list[1]
-                userlist.append(s)
+        try:
+            userlist = []
+            user_file = open("file/" + session['userid'].capitalize() , 'r')
+            for ulist in user_file:
+                list = ulist.split(',')
+                if list[2]=="fixed deposit":
+                    pass
+                else:
+                    s =list[0] + " " + list[2] + " " + list[1]
+                    userlist.append(s)
+        except IOError:
+            print("File not found")
+        except IndexError:
+            print("Index got error")
+
 
         if len(userlist) == 0:
             bank_details = SelectField('Bank Details:', [validators.DataRequired()],choices=[('', 'Select'), ("No accounts", "No accounts")], default='')
@@ -744,12 +750,9 @@ def transaction():
         user_file = open("file/" + session['userid'].capitalize(), 'r')
         for ulist in user_file:
             list = ulist.split(',')
-            if list[2] == "fixed deposit":
-                pass
-            else:
-                s = list[0]
-                if s not in userlist:
-                    userlist.append(s)
+            s = list[0]
+            if s not in userlist:
+                userlist.append(s)
         if len(userlist)== 0:
             bank = SelectField('Bank', [validators.DataRequired()],choices=[('null', 'Select'), ("No account", "No account")], default='')
         elif len(userlist)== 1:

@@ -151,14 +151,14 @@ div #border {
                 <td>{{ Trans.get_date() }}</td>
                 <td>{{ Trans.get_bank_details() }}</td>
                 <td>{{ Trans.get_transaction_details() }}</td>
-                {% if Trans.get_deposit()=="None" %}
-                    <td>{{ Trans.get_deposit() }}</td>
+                {% if Trans.get_deposit().upper()=="NONE" %}
+                    <td>-</td>
                 {% else %}
                     <td>${{ Trans.get_deposit() }}</td>
                 {% endif %}
 
-                {% if "None" in Trans.get_withdraw() %}
-                    <td>{{ Trans.get_withdraw() }}</td>
+                {% if "NONE" in Trans.get_withdraw().upper() %}
+                    <td>-</td>
                 {% else %}
                     <td>${{ Trans.get_withdraw() }}</td>
                 {% endif %}

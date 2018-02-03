@@ -81,7 +81,7 @@ def displaydetails(bankno, specify):
 def ProcessTransaction(name):
     userlist=[]
     user_file=open("file/Transaction.txt",'r')
-    for ulist in user_file:
+    for ulist in reversed(user_file.readlines()):
             list=ulist.split(',')
             if list[0]== name:
                 s=Transaction(list[0],list[1],list[2],list[3],list[4],list[5])
@@ -344,7 +344,7 @@ def spendinganalyticstransaction(name):
 def spendinganalyticstransaction(name):
     userlist = []
     user_file = open("file/Alltransaction.txt", 'r')
-    for ulist in user_file:
+    for ulist in reversed(user_file.readlines()):
         list = ulist.split(',')
         if list[0] == name:
             s = Transaction(list[0], list[1], list[2], list[3], list[4], list[5])
@@ -403,7 +403,7 @@ def filter(name,bank,date):
 def filter(name,bank,date):
     userlist = []
     user_file = open("file/AllTransaction.txt", 'r')
-    for ulist in user_file:
+    for ulist in reversed(user_file.readlines()):
         list = ulist.split(',')
         if list[0] == name and list[6]==date and bank=="All":
             s = Transaction(list[0], list[1], list[2], list[3], list[4], list[5])
