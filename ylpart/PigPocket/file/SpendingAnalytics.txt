@@ -1,0 +1,12 @@
+Steven,Jan 2017,Deposit,900.00
+Steven,Jan 2017,Withdraw,5.39
+Kelly,Jan 2017,Withdraw,79.82
+Kelly,Jan 2017,Deposit,50.90
+Steven,Jan 2017,Withdraw,6.99
+Kelly,Feb 2018,Deposit,980.66
+Steven,Feb 2018,Withdraw,165.00
+Steven,Feb 2018,Deposit,1007.89
+Steven,Feb 2018,Withdraw,80.00
+Steven,Feb 2018,Withdraw,109.87
+Kelly,Feb 2018,Withdraw,130.23
+

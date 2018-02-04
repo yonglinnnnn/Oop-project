@@ -1,0 +1,15 @@
+Steven,19 Jan 2018,Dbs 010-4-444444,Pay,900.00,None,Jan,2017
+Steven,23 Jan 2018,Dbs 010-1-111111,Shopee,None,5.39,Jan,2017
+Kelly,25 Jan 2018,UOB hybrid(savings+current) 910-20-31012,Zara,None,79.82,Jan,2017
+Kelly,28 Jan 2018,UOB hybrid(savings+current) 910-20-31012,Carousell,50.90,None,Jan,2017
+Steven,31 Jan 2018,Ocbc 550-10-89550,Mr Ong,None,6.99,Jan,2017
+Steven,1 Feb 2018,Ocbc 550-10-89550,Bill,None,109.87,Feb,2018
+Steven,1 Feb 2018,Dbs 010-1-111111,Mr lim,1007.89,None,Feb,2018
+Steven,1 Feb 2018,Dbs 010-1-111111,Nyp,None,80.00,Feb,2018
+Steven,1 Feb 2018,Dbs 010-4-444444,Mr Liew,None,165.00,Feb,2018
+Kelly,1 Feb 2018,UOB hybrid(savings+current) 910-20-31012,Pay,980.66,None,Feb,2018
+Kelly,1 Feb 2018,UOB hybrid(savings+current) 910-20-31012,Mom,None,130.23,Feb,2018
+Steven,2 Feb 2018,Dbs 010-1-111111,Withdraw,None,100.00,Feb,2018
+Kelly,2 Feb 2018,UOB hybrid(savings+current) 910-20-31012,Deposit,50.00,None,Feb,2018
+Steven,2 Feb 2018,Dbs 010-4-444444,Withdraw,None,50.00,Feb,2018
+

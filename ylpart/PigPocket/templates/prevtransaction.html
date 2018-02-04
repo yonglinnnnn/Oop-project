@@ -1,0 +1,192 @@
+<!--Author:Chan Yong Lin(174548y)-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pig Pocket|Transactions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<style>
+#cool,#cooler {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#cool td, #cooler td,#shop td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#cool tr:nth-child(even),#cooler tr:nth-child(even),#shop tr:nth-child(even){background-color: #f2f2f2;}
+
+#cool tr:hover,#cooler tr:hover,#shop tr:hover {background-color: #ddd;}
+
+#cool th{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: palevioletred;
+    color: white;
+}
+#shop th{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: palevioletred;
+    color: white;
+}
+ #cooler th{
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: plum;
+    color: white;
+}
+
+table td {font-size:20px;}
+</style>
+
+</head>
+<body>
+    {% extends 'layout.html' %}
+    {% block body %}
+{% from "includes/_formhelper.html" import render_field %}
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                {% for error in field_errors %}
+                    <li>{{ form[field_name].label }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    <!-- Page Content -->
+
+    <!-- Sidebar -->
+
+<a href="/spendinganalytics"><i class="material-icons" style="font-size:48px;color:black">arrow_back</i></a>
+
+        <div class="w3-container">
+            <h2>Transaction type:</h2>
+
+
+            <form method="POST" action="/transaction">
+
+          <div class="form-group" action="/filter">
+        {{ render_field(form.month, class_="secform-control") }}
+    </div>
+          <div class="form-group">
+        {{ render_field(form.bank, class_="secform-control") }}
+    </div>
+    <input type="submit" value="Submit" class="btn btn-info"/>
+            </form>
+
+
+    <!---Results-->
+    <div id="cool">
+    <table border="1" style="border-collapse:collapse;margin:auto;width:80%;">
+{% if p=="hi" and q=="hi" %}
+        <thead><span style="font-size: 20px;">Transaction for {{prevmonth}}:</span></thead>
+{% else %}
+        <thead><span style="font-size: 20px;">Transaction for {{q}} 2018:</span></thead>
+        {%endif%}
+    <tr><th>Date:</th><th>Bank Details</th><th>Transaction details</th><th>Deposit</th><th>Withdraw</th></tr>
+        {% if totaldeposit==0 and totalwithdraw==0 %}
+        <tr><td colspan="5" style="text-align: center;">No transaction yet for {{month}} </td></tr>
+
+
+{% elif p!="hi" and q!="hi" %}
+    {% for Trans in Transaction %}
+
+        <tr>
+                <td>{{ Trans.get_date() }}</td>
+                <td>{{ Trans.get_bank_details() }}</td>
+                <td>{{ Trans.get_transaction_details() }}</td>
+                {% if Trans.get_deposit().upper()=="NONE" %}
+                    <td>-</td>
+                {% else %}
+                    <td>${{ Trans.get_deposit() }}</td>
+                {% endif %}
+
+                {% if Trans.get_withdraw().upper()=="NONE" %}
+                    <td>-</td>
+                {% else %}
+                    <td>${{ Trans.get_withdraw() }}</td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+
+
+<!-- p is bank,q is month-->
+        <tr><td colspan="4" style="font-weight:bold;font-size: 22px;">Total Deposit</td><td style="font-weight:bold;font-size: 22px;">${{totalforfilterdeposit}}</td></tr>
+        <tr><td colspan="4" style="font-weight:bold;font-size: 22px;">Total Withdraw:</td><td style="font-weight:bold;font-size: 22px;">${{totalforfilterwithdraw}}</td></tr>
+
+
+        {% else %}
+        {% for Trans in another %}
+        {% if Trans.get_date().endswith(prevmonth) %}
+
+        <tr>
+                <td>{{ Trans.get_date() }}</td>
+                <td>{{ Trans.get_bank_details() }}</td>
+                <td>{{ Trans.get_transaction_details() }}</td>
+                {% if Trans.get_deposit().upper()=="NONE" %}
+                    <td>-</td>
+                {% else %}
+                    <td>${{ Trans.get_deposit() }}</td>
+                {% endif %}
+
+                {% if Trans.get_withdraw().upper()=="NONE" %}
+                    <td>-</td>
+                {% else %}
+                    <td>${{ Trans.get_withdraw() }}</td>
+                {% endif %}
+            </tr>
+        {% endif %}
+        {% endfor %}
+
+             <tr><td colspan="4" style="font-weight:bold;font-size: 22px;">Total Deposit</td><td style="font-weight:bold;font-size: 22px;">${{totalprevdeposit}}</td></tr>
+            <tr><td colspan="4" style="font-weight:bold;font-size: 22px;">Total Withdraw:</td><td style="font-weight:bold;font-size: 22px;">${{totalprevwithdraw}}</td></tr>
+
+        {% endif %}
+
+
+
+    </table>
+    </div>
+
+
+
+
+
+    </div>
+
+
+        </div>
+
+
+
+      <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+        </script>
+
+
+<br><br><br><br><br><br><br><br><br><br>
+    {% endblock %}
+</body>
+</html>
+
+

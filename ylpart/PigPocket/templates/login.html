@@ -1,0 +1,102 @@
+<head>
+    <meta charset="UTF-8">
+    <title>PigPocket</title>
+    <style>
+
+form {
+    margin-left:25%;
+	margin-top:5%;
+	width:50%;
+    border: 3px solid #f1f1f1;
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.container {
+    padding: 16px;
+}
+
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {
+       display: block;
+       float: none;
+    }
+    .cancelbtn {
+       width: 100%;
+    }
+}
+
+    </style>
+</head>
+
+{% extends '_layout_.html' %}
+    {% block body %}
+    {% from "includes/_formhelper.html" import render_field %}
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                {% for error in field_errors %}
+                    <li>{{ form[field_name].label }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <p style="margin-left:40%; margin-top:3%;" ><img src="static/images/PigPocket1.png" width="25%" height="25%"></p>
+
+
+
+  <div class="container">
+
+        <form method="POST" action="">
+
+    <div class="form-group">
+            {{ render_field(form.userId, class_="form-control") }}
+    </div>
+
+    <div class="form-group">
+            {{ render_field(form.userPass, class_="form-control") }}
+    </div>
+
+    <br>
+
+            <input type="submit" value="LOGIN" class="btn btn-info" style="width:100%"/>
+
+</form>
+
+  </div>
+
+    <p style="margin-left:85%; margin-top:2%;"><img src="/static/images/singpass.png" width="150" height="150"></p>
+
+{% endblock %}
+
+

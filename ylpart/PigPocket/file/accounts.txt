@@ -1,0 +1,5 @@
+Steven,DBS,010-4-444444,savings,0.1,700
+Steven,DBS,010-1-111111,current,0.0,2500
+Steven,OCBC,550-10-89550,savings,0.4,1000
+Kelly,UOB,910-20-31012,savings,1.0,5000
+Kelly,UOB,911-21-31013,fixed deposit,1.2,30000

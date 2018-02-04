@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PigPocket|HOME</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+    #notice {
+        position:absolute;
+        margin-left: 33%;
+    }
+    #fixedDeposit {
+        margin-top:5%;
+
+    }
+    #totalamount {
+        position:relative;
+        left:9%;
+        margin-top:5%;
+    }
+
+        #totalamount {
+        position:relative;
+        left:9%;
+        margin-top:5%;
+        text-align: center;
+    }
+
+</style>
+</head>
+
+
+    {% extends 'layout.html' %}
+    {% block body %}
+        <div id="notice">
+
+            <p style="font-size:25px; position:relative; right:65%;">You have : {{ points }} points</p>
+
+
+
+            {% if hi >= 50 %}
+
+                <table>
+                    <tr><th style="text-align: center">Daily Updates</th></tr>
+                    <tr><td>You have accumulated sufficient points to redeem rewards!! Redeem them <a href={{url_for('rewards')}}>NOW</a>!</td></tr>
+                </table>
+
+            {% else %}
+
+                    <table>
+                        <tr><th style="text-align: center">Daily Updates</th></tr>
+                        <tr><td>You still have insufficient points to redeem any rewards!! Save more to get more points!!</td></tr>
+                    </table>
+
+            {% endif %}
+
+        </div>
+
+    <div id="mainDate" style="margin-left:85%;font-size:20px;">
+        {{date}}
+    </div>
+
+<br>
+<br>
+
+    <div id="fixedDeposit">
+
+        {% if count == 0 %}
+
+            <p style="font-size: 20px;margin-left:40%;margin-top:10%;">You don't have a fixed deposit account</p>
+
+                <div class="w3-content w3-section" style="max-width:700px">
+                <img class="mySlides" src="\static\images\Home_s images\ocbc_fixeddeposit.png" style="width:100%">
+                <img class="mySlides" src="\static\images\Home_s images\uob_cnyfixeddeposit.jpg" style="width:100%">
+                <img class="mySlides" src="\static\images\Home_s images\uob_fixedpromo.jpg" style="width:100%">
+                <img class="mySlides" src="\static\images\Home_s images\uob_usdfixeddepositpromo.jpg" style="width:100%">
+            </div>
+
+        {% else %}
+
+            <table style="width:88%;margin-left:9%;margin-top:9%;font-size:15px;" border="1">
+
+                <tr bgcolor="#D1B2EA">
+                    <th>Bank</th>
+                    <th>Acc No.</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                </tr>
+
+                {% for acc in account %}
+
+                    <tr>
+                        <td>{{acc.get_bank()}}</td>
+                        <td>{{acc.get_account_no()}}</td>
+                        <td>{{acc.get_type()}}</td>
+                        <td><p>{{statusday}} more days, {{statusmonth}} more months & {{statusyear}} more years to expiry</p></td>
+                    </tr>
+
+                {% endfor %}
+
+                </table>
+
+        {% endif %}
+
+        </div>
+
+    <div id="totalamount">
+        <table border="1" style="width:85%;font-size:20px;">
+            <tr><th bgcolor="#FD5DA8">Total Amount in Savings Accounts</th><td>{{tsa}}</td><td><a href={{url_for('accounts')}}>Details</a></td></tr>
+            <tr><th bgcolor="FA86C4">Total Amount in Current Accounts</th><td>{{tsc}}</td><td><a href={{url_for('accounts')}}>Details</a></td></tr>
+        </table>
+    </div>
+
+
+
+<div class="w3-container">
+
+<table style="width:90%; margin-left:13%; margin-top:3%; font-size:30px;">
+
+            <tr><th>{{n_month}}</th><th>{{prev_month}}</th></tr>
+            <tr><td>Withdrawal :<a href={{url_for('transaction')}}>${{totalwa}}</a></td><td>Withdrawal :<a href={{url_for('transaction')}}>${{p_totalwa}}</a></td></tr>
+            <tr><td>Deposit :<a href={{url_for('transaction')}}>${{totalda}}</a></td><td>Deposit :<a href={{url_for('transaction')}}>${{p_totalda}}</a></td></tr>
+            <tr><td>Fixed Deposit A/C :<a href={{url_for('transaction')}}>${{totalfd}}</a></td><td>Fixed Deposit A/C :<a href={{url_for('transaction')}}>${{p_totalfd}}</a></td></tr>
+
+        </table>
+
+
+    </div>
+
+</div>
+
+    <script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+    </script>
+
+ <script>
+    var myIndex = 0;
+    carousel();
+
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+        }
+        myIndex++;
+        if (myIndex > x.length) {myIndex = 1}
+        x[myIndex-1].style.display = "block";
+        setTimeout(carousel, 6000); // Change image every 6 seconds
+    }
+</script>
+
+{% endblock %}
+
+</html>
